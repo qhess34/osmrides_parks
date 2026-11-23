@@ -5,6 +5,7 @@ const { INSTALL } = require('./offpath.js');
 const path = require('path'), { execFileSync } = require('child_process'), fs = require('fs');
 const site = process.argv[2] || 'zeus', build = process.argv.includes('--build');
 const root = path.resolve(__dirname, '..');
+const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur local : MOTEUR=../osmrides/engine/
 (async () => {
   fs.mkdirSync('/tmp/t1', { recursive: true });
   let url;
@@ -12,7 +13,7 @@ const root = path.resolve(__dirname, '..');
     const out = `/tmp/t1/${site}.html`;
     execFileSync('python3', [path.join(root, 'tools/build.py'), site, out], { stdio: 'ignore' });
     url = 'file://' + out;
-  } else url = `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}`;
+  } else url = `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}${MO}`;
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 });
   const errors = [];

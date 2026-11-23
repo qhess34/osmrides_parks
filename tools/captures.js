@@ -3,7 +3,7 @@
    Scénarios : Zeus (pupitre, quai, portillons, lapbars, lift, file), Hourra (zones), 4 garages, mobile, Nouvelle partie. À relire si un libellé change. */
 const { chromium, devices } = require('playwright');
 const fs=require('fs'),path=require('path'),ROOT=path.resolve(__dirname,'..'),OUT=path.join(ROOT,'img/tutos');fs.mkdirSync(OUT,{recursive:true});
-const U=s=>'file://'+ROOT+'/jeu.html?type=parc&lieu=asterix&el='+s;
+const U=s=>'file://'+ROOT+'/jeu.html?type=parc&lieu=asterix&el='+s+(process.env.MOTEUR?'&moteur='+process.env.MOTEUR:'');
 const Q=70;
 async function open(b,site,vp,extra='',syn='0'){
   const ctx=await b.newContext(vp);const p=await ctx.newPage();p.errs=[];

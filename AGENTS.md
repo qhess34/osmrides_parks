@@ -1,7 +1,7 @@
 # AGENTS.md — osmrides_parks
 
 Dépôt de les parcs d'attractions d'OSMrides (Parc Astérix d'abord : Zeus, Trace du Hourra, OzIris, Goudurix) : données OSM des attractions, `SITE`, réglages `game.js`, pages de jeu et tutos des parcs.
-Fait partie d'OSMrides (simulations d'exploitation sur données OpenStreetMap, jeu de fan non officiel, interface en français). Organisation des quatre dépôts et règles communes : `docs/ORGANISATION.md` du dépôt `qhess34/osmrides` (à lire une fois).
+Fait partie d'OSMrides (simulations d'exploitation sur données OpenStreetMap, jeu de fan non officiel, interface en français). Organisation des quatre dépôts et règles communes : [`docs/ORGANISATION.md`](https://github.com/qhess34/osmrides/blob/main/docs/ORGANISATION.md) du dépôt `qhess34/osmrides` (à lire une fois).
 
 ## Responsable : Chef parcs
 
@@ -12,12 +12,13 @@ Session longue lancée par le propriétaire ; mémoire et reprise : `docs/PILOTA
 - Réalisme : rendu crédible, couleurs sourdes, aucun pictogramme ni emoji, rien d'enfantin.
 - OSM est la référence ; tout ce qui est estimé est signalé dans le code et dit au propriétaire.
 - Code lisible, KISS ; aucune dépendance, tout marche en ouvrant le fichier (`file://`), sans `fetch` ni modules ES.
-- Le moteur est **chargé par version** (`const MOTEUR` dans `jeu.html`, mode d'emploi : `docs/versions.md` d'`osmrides`) : jamais de moteur codé ici ; un besoin = issue `inter-equipe` dans `qhess34/osmrides`.
+- Le moteur est **chargé par version** (`const MOTEUR` dans `jeu.html`, mode d'emploi : [`docs/versions.md`](https://github.com/qhess34/osmrides/blob/main/docs/versions.md) d'`osmrides`) : jamais de moteur codé ici ; un besoin = issue `inter-equipe` dans `qhess34/osmrides`.
 - Git : branche `main`, commits directs, messages en anglais à l'impératif.
 
 ## Tests
 
-`tools/check.js <el>` sur chaque attraction (une après l'autre), `tools/save.js`, `tools/mobile.js` ; relever les erreurs de page. Captures seulement pour un point visuel (une petite, ≈ 600×450, JPEG ≈ 70, regardée une fois).
+`tools/check.js <el>` sur chaque attraction (une après l'autre), `tools/save.js`, `tools/mobile.js` ; relever les erreurs de page.
+Moteur local : `MOTEUR=../osmrides/engine/ NODE_PATH=$(npm root -g) node tools/check.js <el>` (variable lue par `check`, `save`, `mobile`, `sound`, `captures`, `thumbs`, `yard-zone` : ajoute `&moteur=…` à l'URL) ; sans variable, moteur chargé par version. Captures seulement pour un point visuel (une petite, ≈ 600×450, JPEG ≈ 70, regardée une fois).
 
 ## Économie de tokens
 

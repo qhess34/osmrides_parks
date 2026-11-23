@@ -6,6 +6,7 @@
 const { chromium } = require('playwright');
 const path = require('path');
 const root = path.resolve(__dirname, '..');
+const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur local : MOTEUR=../osmrides/engine/
 const sites = process.argv.slice(2).filter(a => !a.startsWith('--'));
 (async () => {
   const b = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] }); let fail = 0;
@@ -14,7 +15,7 @@ const sites = process.argv.slice(2).filter(a => !a.startsWith('--'));
     p.on('pageerror', e => errs.push(String(e.message))); p.on('console', m => { if (m.type() === 'error' && !/\.game\.js$/.test((m.location() || {}).url || '')) // lieux/parc/asterix/<el>.game.js facultatif : absent = erreur de chargement attendue
   errs.push(m.text()); });
     await p.addInitScript(() => { try { for (const k of Object.keys(localStorage)) if (k.startsWith('t2z.save.')) localStorage.removeItem(k); } catch (e) {} });
-    await p.goto(`file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}&mode=sandbox`);
+    await p.goto(`file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}&mode=sandbox${MO}`);
     await p.waitForFunction(() => typeof act === 'function' && (act('help'), true)); await p.click('[data-act=closeHelp]');
     const muted0 = await p.evaluate(() => sfx.muted());
     await p.click('#bMute'); // son activé : le vrai graphe Web Audio est construit et utilisé

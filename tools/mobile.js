@@ -7,6 +7,7 @@
 const { chromium, devices } = require('playwright');
 const path = require('path'), fs = require('fs');
 const root = path.resolve(__dirname, '..');
+const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur local : MOTEUR=../osmrides/engine/
 const sites = process.argv.slice(2).filter(a => !a.startsWith('--'));
 if (!sites.length) sites.push('zeus', 'hourra');
 const arg = k => (process.argv.find(a => a.startsWith('--' + k + '=')) || '').slice(k.length + 3);
@@ -44,7 +45,7 @@ const smallTargets = (page, sel) => page.evaluate(s => [...document.querySelecto
 
 async function game(browser, site, mode) {
   const label = `${site} ${mode}`; console.log(label);
-  const { ctx, page, errors, cdp } = await open(browser, VP[mode], `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}`, true);
+  const { ctx, page, errors, cdp } = await open(browser, VP[mode], `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}${MO}`, true);
   await page.waitForFunction(() => typeof act === 'function' && (act('help'), true), undefined, { timeout: 10000 });
   // aide : défilable, bouton de fermeture visible sans défiler
   const h = await page.evaluate(() => { const d = document.querySelector('#mHelp>div'), b = d.querySelector('[data-act=closeHelp]').getBoundingClientRect(); return { scroll: d.scrollHeight > d.clientHeight, btnIn: b.bottom <= innerHeight + 1 && b.top >= 0, w: d.getBoundingClientRect().right <= innerWidth + 1 }; });
@@ -151,7 +152,7 @@ async function game(browser, site, mode) {
 const innerHeightOf = m => VP[m].viewport.height;
 
 async function overflowSmall(browser, site) {
-  const { ctx, page, errors } = await open(browser, VP.small, `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}`, true);
+  const { ctx, page, errors } = await open(browser, VP.small, `file://${root}/jeu.html?type=parc&lieu=asterix&el=${site}${MO}`, true);
   await page.waitForFunction(() => typeof act === 'function' && (act('help'), true)); console.log(`${site} 360x640`);
   ok('aide 360 px: pas de débordement', await noHScroll(page));
   await page.tap('[data-act=closeHelp]'); await page.tap('#tabs [data-arg=pupitre]'); await sleep(350);
@@ -192,7 +193,7 @@ async function parc(browser, mode) {
 
 async function native(browser) { // API Fullscreen réelle (bureau) : informatif si le navigateur sans écran ne l'accorde pas
   console.log('plein écran natif (bureau 1280x800)');
-  const { ctx, page, errors } = await open(browser, { viewport: { width: 1280, height: 800 } }, `file://${root}/jeu.html?type=parc&lieu=asterix&el=${sites[0]}`, false);
+  const { ctx, page, errors } = await open(browser, { viewport: { width: 1280, height: 800 } }, `file://${root}/jeu.html?type=parc&lieu=asterix&el=${sites[0]}${MO}`, false);
   await page.waitForFunction(() => typeof act === 'function' && (act('help'), true)); await page.click('[data-act=closeHelp]');
   await page.click('#bFs'); await sleep(500);
   const st = await page.evaluate(() => ({ fe: !!document.fullscreenElement, fs: document.body.classList.contains('fs') }));

@@ -4,8 +4,9 @@
    retour, comparaison, 30 min de plus ; puis alternance entre attractions, « Nouvelle partie », bac à sable. Sortie courte PASS/FAIL. */
 const { chromium } = require('playwright');
 const path = require('path'), root = path.resolve(__dirname, '..');
+const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur local : MOTEUR=../osmrides/engine/
 const sites = process.argv.slice(2).filter(a => !a.startsWith('-')); if (!sites.length) sites.push('zeus', 'hourra', 'oziris', 'goudurix');
-const URL = (s, m) => `file://${root}/jeu.html?type=parc&lieu=asterix&el=${s}` + (m ? '&mode=' + m : '');
+const URL = (s, m) => `file://${root}/jeu.html?type=parc&lieu=asterix&el=${s}${MO}` + (m ? '&mode=' + m : '');
 const INDEX = `file://${root}/index.html`;
 let fails = [];
 const ok = (name, c, info) => { if (!c) fails.push(name + (info !== undefined ? ' ' + JSON.stringify(info) : '')); return c; };

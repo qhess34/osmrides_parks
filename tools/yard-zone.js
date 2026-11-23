@@ -6,7 +6,7 @@
 const {chromium}=require('playwright');
 const SITE_ID=process.argv[2]||'goudurix',ZONE=process.argv[3]||'B1',BACK=process.argv[4]==='back';
 (async()=>{const b=await chromium.launch();const errs=[];
- const url='file://'+require('path').resolve(__dirname,'..')+'/jeu.html?type=parc&lieu=asterix&el='+SITE_ID+'&mode=sandbox';
+ const url='file://'+require('path').resolve(__dirname,'..')+'/jeu.html?type=parc&lieu=asterix&el='+SITE_ID+'&mode=sandbox'+(process.env.MOTEUR?'&moteur='+process.env.MOTEUR:'');
  // 1) géométrie du circuit au point d'arrêt de la zone (jeu d'origine)
  let p=await b.newPage();await p.goto(url);await p.waitForFunction(()=>typeof act==='function');
  const geo=await p.evaluate(([z,bk])=>{const a=TLEN+3,s=bk?zStop(z)-a-6:zStop(z)+.8,f=frameAt(s,mkF()),l=Math.hypot(f.R.x,f.R.z);return {a,x:f.p.x,z:f.p.z,tx:f.T.x,tz:f.T.z,rx:f.R.x/l,rz:f.R.z/l};},[ZONE,BACK]);await p.close();

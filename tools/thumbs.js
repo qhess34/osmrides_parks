@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 for(const s of ['zeus','hourra','oziris','goudurix']){
  const p=await b.newPage({viewport:{width:1000,height:640},deviceScaleFactor:1});
  await p.addInitScript(()=>{try{localStorage.setItem('t2z.syn','0')}catch(e){}});
- await p.goto('file://'+require('path').resolve(__dirname,'..')+'/jeu.html?type=parc&lieu=asterix&el='+s+'&mode=sandbox');await p.waitForFunction(() => typeof act === 'function' && (act('help'), true));await p.click('[data-act=closeHelp]');
+ await p.goto('file://'+require('path').resolve(__dirname,'..')+'/jeu.html?type=parc&lieu=asterix&el='+s+'&mode=sandbox'+(process.env.MOTEUR?'&moteur='+process.env.MOTEUR:''));await p.waitForFunction(() => typeof act === 'function' && (act('help'), true));await p.click('[data-act=closeHelp]');
  await p.addStyleTag({content:'#cams,#hint,#fsBar{display:none!important}'});
  await p.evaluate(()=>{act('speed',0);setCam(CAMS.gare?'gare':'vue');cam.g.s=cam.g.s;for(let i=0;i<40;i++)render(.05);});
  const v=await p.locator('#view').boundingBox();
