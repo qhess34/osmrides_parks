@@ -1,4 +1,4 @@
-// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (lieux/<type>/<lieu>/<el>.js).
+// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (sites/<site>.js).
 // Le corps est du JSON strict : à modifier de préférence avec l'éditeur (docker compose up -d, http://127.0.0.1:8787/).
 const GAME = {
   "barriers": {
@@ -91,77 +91,5 @@ const GAME = {
         ]
       ]
     }
-  ],
-  "site": {
-    "kind": "bob",
-    "car": {
-      "len": 1.55,
-      "n": 7,
-      "seats": 2
-    },
-    "trains": [
-      {
-        "name": "Train 1",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 28
-      },
-      {
-        "name": "Train 2",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 44,
-        "lane": 1
-      },
-      {
-        "name": "Train 3",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 36,
-        "lane": 2
-      },
-      {
-        "name": "Train 4",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 52,
-        "lane": 3
-      },
-      {
-        "name": "Train 5",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 20,
-        "lane": 4
-      },
-      {
-        "name": "Train 6",
-        "col": "#d8a92a",
-        "col2": "#2a2a2c",
-        "wear": 60,
-        "lane": 5
-      }
-    ],
-    "trough": {
-      "lo": [
-        112,
-        38,
-        36
-      ],
-      "hi": [
-        140,
-        52,
-        46
-      ],
-      "edge": "#5a1f1c",
-      "deck": "#6e2622",
-      "rim": "#b8322c",
-      "shine": "rgba(255,220,210,.12)"
-    },
-    "phys": {
-      "roll": 0.13,
-      "drag": 0.0016,
-      "vmin": 3
-    }
-  }
+  ]
 };

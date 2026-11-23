@@ -11,9 +11,11 @@ const SITE=(()=>{
   const PROM=OSM.paths.prom,KW=PROM.findIndex(p=>Math.hypot(p[0]+30.1,p[1]+9.3)<1),PROM_W=PROM.slice(0,KW+1),PROM_N=PROM.slice(KW+1).reverse();
   const GM_=OSM.paths.garage,onGarage=x=>[x,GM_[0][1]+(x-GM_[0][0])*(GM_[GM_.length-1][1]-GM_[0][1])/(GM_[GM_.length-1][0]-GM_[0][0])]; // voie de maintenance réelle (OSM 938337765 + 938337766)
   return {
-    // kind, car (len, n, seats, abreast, restraint), trains, track, trough, phys : réglés dans GAME.site (zeus.game.js, écrit par l'éditeur) ; ici seulement le reste de car (w, inline, pitch).
-    id:'zeus',title:'Tonnerre 2 Zeus',trackName:'Voie en bois',goal:400,lap:150,
+    id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,lap:150,
+    car:{len:1.5,n:14},                    // 14 wagons de 2 places côte à côte ; longueur de wagon estimée
+    trains:[{name:'Train 1 « Éclair »',col:'#1c8a94',col2:'#f2c14e',wear:30},{name:'Train 2 « Foudre »',col:'#17727c',col2:'#d9dde2',wear:48}],
     stopBack:3,holdBack:4,dropAfter:14,loadSide:1,
+    phys:{roll:.098,drag:.0006,vmin:3},
     // Garage dans le prolongement de la gare (SITE.yard, voir docs/manoeuvres.md) : aiguillage = tronçon en S coulissant, une voie où les trains se rangent en file.
     // Voie de garage = voie de maintenance réelle (OSM) ; position et course du chariot (a, b, slide) déduites de la carte ; vitesse de manœuvre et durée de déplacement estimées.
     yard:{at:'station',device:'switch',a:.8,b:6.4,slide:3.4,side:-1,len:8.6,lanes:[{name:'Garage',pts:[onGarage(21.5),onGarage(53.6)]}],move:{v:2.4,t:3}},
