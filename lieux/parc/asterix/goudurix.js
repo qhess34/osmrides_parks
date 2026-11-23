@@ -24,18 +24,16 @@ const SITE=(()=>{
   // Voie de garage : S OSM 1580112201 (du nœud railway=switch vers le sud) puis voie de maintenance 1221386549 ; le tronçon mobile en S va du nœud switch au 3e point du S (≈ 6 m).
   const lanePts=OSM.paths.gS.slice().reverse().slice(2).concat(OSM.paths.garage.slice().reverse().slice(1)),BRIDGE=OSM.paths.bridge.slice(0,3).reverse(); // pont de bois OSM 161214279 (layer 1) ; son 4e point = début du chemin de liaison QL
   return {
-    id:'goudurix',title:'Goudurix',kind:'steel',trackName:'Voie tubulaire',goal:500,lap:120,
+    // kind, car (len, n, seats, abreast, restraint), trains, track, trough, phys : réglés dans GAME.site (goudurix.game.js, écrit par l'éditeur) ; ici seulement le reste de car (w, inline, pitch).
+    id:'goudurix',title:'Goudurix',trackName:'Voie tubulaire',goal:500,lap:120,
     // 2 trains de 7 wagons, 28 places = 4 par wagon en 2 rangées de 2 (RCDB, Wikipédia). Longueur (2,55 m) et largeur (1,5 m) d'un wagon ESTIMÉES.
-    car:{len:2.55,n:7,seats:4,abreast:2,w:1.5},
+    car:{w:1.5},
     // Trains rouges (propriétaire, 2026-11-15) ; teinte exacte et liseré gris sombre SUPPOSÉS ; voie tubulaire jaune et supports rouges d'après la photo du propriétaire (teintes assourdies).
-    trains:[{name:'Train 1',col:'#9a2d28',col2:'#3a3a3e',wear:30},{name:'Train 2',col:'#9a2d28',col2:'#3a3a3e',wear:44}],
-    track:{spine:'#c4a32e',rail:'#b9532f',support:'#8e3b2c'}, // poutre et traverses jaunes, rails tubulaires orange-rouge, supports rouille (photo du propriétaire, 2026-11-15),
     // (propriétaire) un seul train sur le lift ; le lift retient le train en haut si la zone de freinage suivante est occupée : comportement par défaut du moteur
     // Deux zones de freinage (propriétaire) : frein de bloc B1 (repère blk1) juste avant la portion droite sous le lift, frein final (brk) sur la voie parallèle à la gare. Position d'après le propriétaire, emplacement exact ESTIMÉ.
     // Repères lus dans OSM (2026-11-16) : lift 541092982, B1 = zone « waiting » 1580112200, frein final = zone « waiting » 1580112203 (voie parallèle à la gare, propriétaire).
     // holdBack 34 : le train s'arrête au bout du frein final OSM (qui finit 31 m avant la gare), 0,6 m avant le tronçon mobile de l'aiguillage (ESTIMÉ à ± 1 m).
     stopBack:.5,holdBack:34,dropAfter:35,loadSide:1,   // le train roule vers le sud : loadSide 1 = embarquement à l'OUEST (portillons à l'ouest, propriétaire ; entrée OSM à l'ouest)
-    phys:{roll:.02,drag:.0004,vmin:3},
     // Garage : une seule voie (la voie de maintenance OSM), 2 trains au plus. Durée de rotation (4 s) et vitesse de manœuvre ESTIMÉES.
     yard:{at:'station',device:'switch',back:true,rotary:true,s:true,a:45.4,b:51.6,slide:1,side:-1,len:5.6,devName:'Aiguillage',devLabel:'l\'aiguillage',lanes:[{name:'Garage',pts:lanePts,cap:2}],move:{v:2.4,t:4}},
     stationPoly:OSM.polys.station,stationAt:[.4,0,12],stationRoofCol:'#9b8f7d',

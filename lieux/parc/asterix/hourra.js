@@ -22,22 +22,18 @@ const SITE=(()=>{
   const lane=(n,P)=>({name:'Voie '+n,d:r1(dOf([P[0],P[P.length-1]])),len:r1(Math.hypot(P[P.length-1][0]-P[0][0],P[P.length-1][1]-P[0][1])),cap:1});
   const GAP=r1(dOf([OSM.paths.garB[0],OSM.paths.garB[OSM.paths.garB.length-1]])),LGAP=Math.max(.3,r1(Math.min(...LN.map(P=>Math.min(tOf(P[0]),tOf(P[P.length-1]))))-AL));
   return {
-    id:'hourra',title:'La Trace du Hourra',kind:'bob',trackName:'Gouttière',goal:900,lap:110,
+    // kind, car (len, n, seats, abreast, restraint), trains, track, trough, phys : réglés dans GAME.site (hourra.game.js, écrit par l'éditeur) ; ici seulement le reste de car (w, inline, pitch).
+    id:'hourra',title:'La Trace du Hourra',trackName:'Gouttière',goal:900,lap:110,
     // 7 bobs de 2 places l'une derrière l'autre (propriétaire) ; longueur et largeur d'un bob estimées. pitch : 0,56 m d'axe à axe, passagers l'un contre l'autre (propriétaire, 2026-11-17 : pas d'espace entre eux)
     // (propriétaire : « collés l'un contre l'autre ») ; tient dans 1,55 m avec la lapbar devant le passager avant, sans allonger le bob.
-    car:{len:1.55,n:7,seats:2,inline:true,w:.95,pitch:.56},
+    car:{inline:true,w:.95,pitch:.56},
     // 6 trains (propriétaire), 5 au plus sur le parcours : les 5 autres démarrent chacun sur sa voie de garage. Teintes sourdes supposées (couleurs réelles non vérifiées).
     // Gouttière rouge foncé à nervures extérieures, bord rouge vif (photo du propriétaire, 2026-11-14)
-    trough:{lo:[112,38,36],hi:[140,52,46],edge:'#5a1f1c',deck:'#6e2622',rim:'#b8322c',shine:'rgba(255,220,210,.12)'},
     // Tous les trains : bobs jaunes, intérieur noir (propriétaire, 2026-11-14)
-    trains:[{name:'Train 1',col:'#d8a92a',col2:'#2a2a2c',wear:28},{name:'Train 2',col:'#d8a92a',col2:'#2a2a2c',wear:44,lane:1},
-      {name:'Train 3',col:'#d8a92a',col2:'#2a2a2c',wear:36,lane:2},{name:'Train 4',col:'#d8a92a',col2:'#2a2a2c',wear:52,lane:3},
-      {name:'Train 5',col:'#d8a92a',col2:'#2a2a2c',wear:20,lane:4},{name:'Train 6',col:'#d8a92a',col2:'#2a2a2c',wear:60,lane:5}],
     maxRun:5,   // au plus 5 trains sur le parcours (propriétaire) : la sortie d'un 6e est refusée
     // Repères lus dans OSM (tools/specs/hourra.json) : lift, freins de bloc B1 (zone « waiting » de 11,7 m en haut du lift : frein de bloc après le lift, propriétaire
     // 2026-11-16 ; le lift retient le train tant que B1 est occupé), B2 et B3, frein final, rail de transfert du pont (arrêt au bout du rail : pas de holdBack), frein avant gare.
     stopBack:.5,dropAfter:12,loadSide:-1,
-    phys:{roll:.13,drag:.0016,vmin:3},
     // Garage sur le frein final : pont transbordeur DROIT (propriétaire) — deux éléments mobiles indépendants, droits, d'un train de long :
     // rail mobile du parcours (rail A) = rail du circuit (zone de freinage), deux positions seulement : sur le circuit ou retiré vers l'est (retract) ;
     // chariot et rail du chariot (rail B ; garage, freins et pneus, porte le train) : en ligne avec le circuit (G, seulement rail A retiré) ou face à la voie k (ouest).

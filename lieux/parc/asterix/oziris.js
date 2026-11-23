@@ -15,19 +15,16 @@ const SITE=(()=>{
   // 1…3 = face à la voie k (circuit interrompu, trains retenus avant le pont). Pas de rail de garage distinct, pas de position G.
   const lane=(n,d)=>({name:'Voie '+n,d,len:13.3,cap:1});
   return {
-    id:'oziris',title:'OzIris',kind:'inverted',trackName:'Poutre caisson',goal:900,lap:140,
+    // kind, car (len, n, seats, abreast, restraint), trains, track, trough, phys : réglés dans GAME.site (oziris.game.js, écrit par l'éditeur) ; ici seulement le reste de car (w, inline, pitch).
+    id:'oziris',title:'OzIris',trackName:'Poutre caisson',goal:900,lap:140,
     // 3 trains de 8 wagons, 4 places côte à côte par wagon (Wikipedia, d'après RCDB) ; longueur (1,55 m) et largeur (2,6 m) d'un wagon ESTIMÉES.
-    car:{len:1.55,n:8,seats:4,abreast:4,w:2.6},
+    car:{w:2.6},
     // 3 trains, tous BLEUS (propriétaire, 2026-11-15 ; l'article sur un 4e train est dépassé). Bleu sourd d'après les photos (voie et poutre bleues) ;
     // col2 = gris clair (lapbars, bandes, nez) pour ressortir sur la poutre bleue : teintes exactes SUPPOSÉES.
-    trains:[{name:'Train 1',col:'#2c4f8c',col2:'#cfd3da',wear:26},{name:'Train 2',col:'#2c4f8c',col2:'#cfd3da',wear:42,lane:1},
-      {name:'Train 3',col:'#2c4f8c',col2:'#cfd3da',wear:34,lane:2}],
-    track:{spine:'#3e5a74',rail:'#262d36',support:'#a89a7c'},
     // Repères lus dans OSM (tools/specs/oziris.json, mise à jour du propriétaire 2026-11-16) : frein final 1580105919, rail du pont 541161847 (tr0/tr1 : le train s'arrête au bout
     // du rail, pas de holdBack), zone d'attente avant gare 1330192627 (pre). OSM n'a AUCUN frein de bloc en parcours : l'ancien B1 (estimé) est retiré.
     // Embarquement à l'OUEST : entrée OSM entrance=main (-12,6 ; -9,0) à l'ouest de la voie, sortie entrance=exit (-7,5 ; -9,5) à l'est (réponse à la question 24 par OSM).
     stopBack:.5,dropAfter:50,loadSide:1,
-    phys:{roll:.06,drag:.0011,vmin:3},
     // Pont transbordeur à rail unique (single) : zone RB « Rail du pont » = zone de freinage du circuit (AUTO) en P, zone porteuse face à une voie.
     // ESTIMÉS : longueur du rail (un train + 0,6 m de chaque côté, pre/post ; OSM : pont ≈ 14 m), jeu rail/voies (laneGap 0,8 m),
     // vitesse du chariot (0,5 m/s, 4 s au moins), vitesse de manœuvre des trains (1,5 m/s), sens d'entrée (marche arrière, d'après la position des voies).

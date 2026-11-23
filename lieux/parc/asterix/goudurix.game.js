@@ -1,4 +1,4 @@
-// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (sites/<site>.js).
+// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (lieux/<type>/<lieu>/<el>.js).
 // Le corps est du JSON strict : à modifier de préférence avec l'éditeur (docker compose up -d, http://127.0.0.1:8787/).
 const GAME = {
   "barriers": {
@@ -79,5 +79,38 @@ const GAME = {
   ],
   "board": {
     "depth": 2.13
+  },
+  "site": {
+    "kind": "steel",
+    "car": {
+      "len": 2.55,
+      "n": 7,
+      "seats": 4,
+      "abreast": 2
+    },
+    "trains": [
+      {
+        "name": "Train 1",
+        "col": "#9a2d28",
+        "col2": "#3a3a3e",
+        "wear": 30
+      },
+      {
+        "name": "Train 2",
+        "col": "#9a2d28",
+        "col2": "#3a3a3e",
+        "wear": 44
+      }
+    ],
+    "track": {
+      "spine": "#c4a32e",
+      "rail": "#b9532f",
+      "support": "#8e3b2c"
+    },
+    "phys": {
+      "roll": 0.02,
+      "drag": 0.0004,
+      "vmin": 3
+    }
   }
 };
