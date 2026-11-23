@@ -7,8 +7,8 @@ const SITE=(()=>{
   const ST=OSM.paths.stair,W=OSM.paths.queue.concat([ST[ST.length-1]]),SHORT_E=OSM.paths.short;
   const at=(x,z)=>{let b=0,bd=1e9;W.forEach((p,i)=>{const d=Math.hypot(p[0]-x,p[1]-z);if(d<bd){bd=d;b=i;}});return b;};
   const JB=at(-27.2,25.2),JA=at(-25.9,27.3),J2=at(-12.2,28.4),J1=at(-4.1,16.4),ENTRY0=[-28.6,-5.4];
-  const PROM_W=[[-107.1,-8.2],[-95.1,-8.7],[-83.4,-9.8],[-74.9,-14],[-67,-17.3],[-61.1,-20.1],[-57.7,-19.1],[-50.9,-15.2],[-44.4,-11.1],[-39.7,-9.8],[-33.4,-9],[-30.1,-9.2]];
-  const PROM_N=[[4.8,-56.4],[3.6,-42.4],[-.2,-32.2],[-8.6,-25],[-11.6,-19],[-13.2,-14.5],[-17.6,-8.5],[-20.9,-6.7]];
+  // Promenades vers l'entrée : un seul chemin OSM 1101581904 (ouest → nord) ; PROM_W jusqu'au raccord (-30,1 ; -9,3), PROM_N de l'extrémité nord au raccord (-20,9 ; -6,7).
+  const PROM=OSM.paths.prom,KW=PROM.findIndex(p=>Math.hypot(p[0]+30.1,p[1]+9.3)<1),PROM_W=PROM.slice(0,KW+1),PROM_N=PROM.slice(KW+1).reverse();
   const GM_=OSM.paths.garage,onGarage=x=>[x,GM_[0][1]+(x-GM_[0][0])*(GM_[GM_.length-1][1]-GM_[0][1])/(GM_[GM_.length-1][0]-GM_[0][0])]; // voie de maintenance réelle (OSM 938337765 + 938337766)
   return {
     id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,lap:150,
@@ -41,6 +41,7 @@ const SITE=(()=>{
         {pts:W.slice(JA,J2+1)},
         {name:'raccourci est',loop:W.slice(J2,J1+1),short:SHORT_E||[W[J2],[-12.1,27],[-12,19.3],[-11.6,17.4],[-9.9,16.2],W[J1]]},
         {pts:W.slice(J1)}]},
+    paths:[PROM],   // promenade OSM 1101581904 (plus dessinée avec le décor une fois déclarée dans la spec)
     approach:[{w:.6,pts:PROM_W.concat([[-29.2,-9]])},{w:.4,pts:PROM_N.concat([[-29.2,-9]])}],
     noStroll:[[-27.5,-1.5]],
     board:{via:[[-3.9,7.9],[-4,6.9]],walk:5.25},   // couloir d'attente derrière les places (lot 6 : portillons rapprochés du bord du quai, engine/garage.js PGATE)

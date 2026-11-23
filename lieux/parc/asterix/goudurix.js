@@ -22,7 +22,7 @@ const SITE=(()=>{
   // (bord de l'appareil côté gare, à 44,4 m en amont de l'arrêt de la tête du train) et rejoint la voie de maintenance OSM (3,4 m plus loin latéralement, ≈ 6 m en amont). Longueur
   // du S et durée de rotation (4 s) : ESTIMÉES.
   // Voie de garage : S OSM 1580112201 (du nœud railway=switch vers le sud) puis voie de maintenance 1221386549 ; le tronçon mobile en S va du nœud switch au 3e point du S (≈ 6 m).
-  const lanePts=OSM.paths.gS.slice().reverse().slice(2).concat(OSM.paths.garage.slice().reverse().slice(1)),BRIDGE=[[42.3,9.7],[87.8,21.7],[89.9,26.6]]; // pont de bois OSM 161214279 (layer 1)
+  const lanePts=OSM.paths.gS.slice().reverse().slice(2).concat(OSM.paths.garage.slice().reverse().slice(1)),BRIDGE=OSM.paths.bridge.slice(0,3).reverse(); // pont de bois OSM 161214279 (layer 1) ; son 4e point = début du chemin de liaison QL
   return {
     id:'goudurix',title:'Goudurix',kind:'steel',trackName:'Voie tubulaire',goal:500,lap:120,
     // 2 trains de 7 wagons, 28 places = 4 par wagon en 2 rangées de 2 (RCDB, Wikipédia). Longueur (2,55 m) et largeur (1,5 m) d'un wagon ESTIMÉES.
@@ -54,13 +54,13 @@ const SITE=(()=>{
         {name:'boucle nord',short:Q.slice(F0,F1+1),loop:QLOOP},
         {pts:Q.slice(F1).concat(QIN.slice(1,2))}]},
     // Arrivée : depuis le pont de bois et l'allée est (OSM 161214279, 161214274), ou depuis l'entrée sud, par le chemin 1102233771.
-    approach:[{w:.5,pts:BRIDGE.slice().reverse().concat([[34,7.5],[29.9,7.7],[18,4.2]],EAST.slice(0,3))},{w:.5,pts:EAST.slice(2).reverse()}],
+    approach:[{w:.5,pts:BRIDGE.slice().reverse().concat(QL,EAST.slice(0,3))},{w:.5,pts:EAST.slice(2).reverse()}],
     paths:[PROM,PROM2,QL,EAST,XO],
     // Entrée du quai ouest (OSM entrance=main, mur ouest de la gare) ; couloir d'attente à 2,8 m de la voie, entre les deux places de chaque portillon (ESTIMÉ ; lot 6 : portillons rapprochés du bord du quai)
     board:{via:[[-3.8,-0.4]],walk:2.8},
     // Sortie (OSM 2026-11-16) : porte entrance=exit (3,5 ; 5,5) du mur est, chemin 1580112210, escalier 1580112211, chemin 1580112209 ; raccord ESTIMÉ vers l'allée est et le pont de bois.
     exit:{door:XO[0],path:XO,
-      tails:[[XO[XO.length-1],[16.5,11.6],[18,4.2],[29.9,7.7],[34,7.5]].concat(BRIDGE),[XO[XO.length-1],[16.5,11.6]].concat(EAST.slice(1))]},
+      tails:[[XO[XO.length-1],EAST[0]].concat(QL.slice().reverse(),BRIDGE),[XO[XO.length-1],EAST[0]].concat(EAST.slice(1))]},
     catwalks:{side:{Lift:1}},  // passerelle-escalier du lift À DROITE du sens de marche : information du propriétaire (2026-11-16), pas une estimation ; freins : côté choisi par le moteur
     jobsites:{liftFix:[8,70],chainRev:[8,70],trackRev:[42,60],brakeFix:[-10,30],brakeRev:[-10,30],trainRev:[-10,12],rearm:[5,-3]},
     view:{x:25,z:52,w:200,h:190,bounds:[-90,120,-60,170]},
