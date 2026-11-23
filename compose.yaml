@@ -24,7 +24,11 @@ services:
         V=$${OSMRIDES:-$$(sed -n "s/.*const MOTEUR='\([^']*\)'.*/\1/p" /depot/jeu.html)}
         echo "Téléchargement de l'éditeur OSMrides $$V"
         mkdir -p /tmp/osmrides && cd /tmp/osmrides
-        wget -qO- "https://codeload.github.com/qhess34/osmrides/tar.gz/$$V" | tar -xz
+        if ! wget -qO osmrides.tgz "https://codeload.github.com/qhess34/osmrides/tar.gz/$$V" || ! tar -xzf osmrides.tgz; then
+          echo "ÉCHEC : impossible de télécharger l'éditeur OSMrides $$V depuis codeload.github.com."
+          echo "Vérifier la version (étiquette existante) et l'accès Internet du conteneur (DNS de Docker)."
+          exit 1
+        fi
         exec node /tmp/osmrides/*/editor/server.js
     volumes:
       - type: bind
