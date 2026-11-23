@@ -16,6 +16,10 @@ Après 3 ou 4 demandes ou une grande étape : mettre à jour « État courant »
 
 ## État courant
 
-_23/11/2026, mis en place par la session de pilotage n° 9 d'osmrides._
+_23/11/2026 après-midi, Chef parcs, session n° 1._
 
-Dépôt vide au 23/11. À faire : y déplacer depuis `osmrides` `lieux/parc/asterix/`, `jeu.html`, `plan.html`, `tutos.html`, `img/` des parcs, les tests de jeu, avec une copie figée du moteur (`engine/`, version v1 d'osmrides) ; Pages = jeux des parcs.
+- Parc Astérix déplacé depuis `osmrides` (commit 11d4e28) : `lieux/parc/asterix/` (game.js du propriétaire identiques), `jeu.html`, `index.html`, `plan.html`, `tutos.html`, images, tests, skills, workflow Pages. Moteur chargé par version : `const MOTEUR='0.0.1';` dans `jeu.html` (jsDelivr) ; éditeur par `compose.yaml` (`docker compose up -d`, http://127.0.0.1:8787/).
+- Tests 23/11 : `check.js` PASS sur zeus, hourra, oziris, goudurix (moteur chargé en ligne) ; `save.js`, `mobile.js` PASS. Non testés : éditeur Docker, hors ligne en https, `thumbs.js`/`captures.js`/`sound.js`.
+- Réseau de l'environnement cloud « Default » : `cdn.jsdelivr.net` autorisé (choix du propriétaire) ; les tests passent par le moteur en ligne.
+- `apropos.html` non copié (ira dans `osmrides_website`) : liens remplacés provisoirement par le dépôt `osmrides`.
+- Issues : #1 (déplacement, à valider), #2 (version 0.0.1, éditeur Docker à valider par le propriétaire).
