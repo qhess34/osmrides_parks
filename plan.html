@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1626">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OSMrides">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>Plan du Parc Astérix — simulateurs d'exploitation</title>
+<style>
+:root{--bg:#0f1626;--panel:#18223a;--panel2:#202d4b;--line:#32426a;--txt:#e8ecf6;--dim:#9aa7c4;--gold:#f2c14e}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;background:var(--bg);color:var(--txt);font:14px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{display:flex;flex-direction:column;height:100%;height:100dvh}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:8px 14px;background:linear-gradient(#1b2743,#141d33);border-bottom:2px solid var(--gold)}
+header h1{font-size:17px;margin:0;color:var(--gold);letter-spacing:.5px;white-space:nowrap}
+header h1 a{color:var(--dim);text-decoration:none;margin-right:4px}header h1 a:hover{color:var(--gold)}
+header span{color:var(--dim);font-size:12.5px}
+#view{position:relative;flex:1;min-height:0;background:#6f7f58;overflow:hidden}
+canvas{display:block;position:absolute;inset:0;touch-action:none;cursor:grab}
+canvas.drag{cursor:grabbing}canvas.hit{cursor:pointer}
+#hint{position:absolute;right:8px;top:8px;font-size:11.5px;color:#fff;background:rgba(15,22,38,.6);padding:3px 8px;border-radius:6px;pointer-events:none}
+#info{position:absolute;left:8px;right:8px;bottom:8px;max-width:420px;background:rgba(24,34,58,.94);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:none}
+#info h2{margin:0 0 4px;font-size:15px;color:var(--gold)}#info p{margin:0;color:var(--dim)}
+#info a{display:inline-block;margin-top:8px;color:#fff;background:#1f7a52;border:1px solid #4cc38a;border-radius:7px;padding:6px 12px;text-decoration:none}
+#zoom{position:absolute;left:8px;top:8px;display:flex;flex-direction:column;gap:4px}
+#zoom button{width:34px;height:34px;font:inherit;font-size:18px;color:var(--txt);background:rgba(24,34,58,.85);border:1px solid #47598a;border-radius:7px;cursor:pointer;padding:0}
+#zoom button:hover{background:#3a4d7d}
+#legend{position:absolute;right:8px;bottom:8px;font-size:11.5px;color:#fff;background:rgba(15,22,38,.6);padding:4px 8px;border-radius:6px;pointer-events:none}
+#fsb{position:absolute;right:8px;top:8px;z-index:3;font:inherit;font-size:13px;color:var(--txt);background:rgba(24,34,58,.88);border:1px solid #47598a;border-radius:7px;padding:6px 12px;min-height:40px;cursor:pointer}
+#fsb:hover{background:#3a4d7d}
+#hint{top:56px}
+#view.fs{position:fixed;left:0;top:0;width:100vw;height:100vh;height:100dvh;z-index:20}
+@media(pointer:coarse){#zoom button{width:44px;height:44px}#info a{padding:10px 16px}}
+@media(max-width:560px){#hint{display:none}#info{max-width:none}#legend{display:none}header h1{font-size:15px}}
+header{padding-top:max(8px,env(safe-area-inset-top));padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+#fsb{top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right))}
+</style>
+</head>
+<body>
+<div id="app">
+<header><h1><a href="index.html">&larr;</a>Plan du Parc Astérix</h1><span>Glisser pour déplacer, molette ou pincement pour zoomer. Attractions en doré : simulateur.</span></header>
+<div id="view">
+<canvas id="c"></canvas>
+<div id="zoom"><button id="zi" aria-label="Zoom avant">+</button><button id="zo" aria-label="Zoom arrière">&minus;</button><button id="zf" aria-label="Recentrer" style="font-size:13px">&#9633;</button></div>
+<button id="fsb" aria-label="Plein écran">Plein écran</button>
+<div id="hint">Fond : © OpenStreetMap</div>
+<div id="legend"></div>
+<div id="info"></div>
+</div>
+</div>
+<script src="lieux/index.js"></script>
+<script>
+/* Plan du lieu : ?type=parc&lieu=asterix (défaut : le seul lieu), données lieux/<type>/<lieu>/plan.data.js */
+const PQ=n=>{const m=new RegExp('[?&]'+n+'=([a-z0-9-]+)').exec(location.search);return m?m[1]:'';};
+const PT=PQ('type')||'parc',PL=PQ('lieu')||'asterix';
+document.write('<script src="'+lieuDir(PT,PL)+'plan.data.js"><\/script>');
+</script>
+<script>
+'use strict';
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),view=document.getElementById('view'),info=document.getElementById('info');
+// couleurs sourdes, vue aérienne
+const COL={ground:'#7b8561',lawn:'#8a9a66',forest:'#4d6340',water:'#5f7f8c',waterEdge:'#4a6874',bldFill:'#b3aa9d',bldEdge:'#7d766b',
+  plaza:'#b9ae8e',path:'#cbbf9f',pathEdge:'#9b9078',road:'#8c8c88',roadEdge:'#6b6b68',track:'#4a4540',hl:'#f2c14e',text:'#1c2230'};
+// Path2D pré-calculés (anneaux evenodd, canaux en lignes)
+function ringPath(f){const p=new Path2D();for(const r of f){if(r.l)continue;p.moveTo(r[0],r[1]);for(let i=2;i<r.length;i+=2)p.lineTo(r[i],r[i+1]);p.closePath();}return p}
+function linePath(arr){const p=new Path2D();for(const r of arr){p.moveTo(r[0],r[1]);for(let i=2;i<r.length;i+=2)p.lineTo(r[i],r[i+1]);}return p}
+const P={};
+for(const k of ['water','lawn','forest','bld'])P[k]=PARK[k].map(ringPath);
+P.plaza=(PARK.plaza||[]).map(ringPath); // zones piétonnes (surfaces praticables)
+P.canal=linePath(PARK.water.flatMap(f=>f.filter(r=>r.l).map(r=>r.l)));
+P.paths=linePath(PARK.paths);P.roads=linePath(PARK.roads);P.steps=linePath(PARK.steps||[]);P.rock=(PARK.rock||[]).map(ringPath);
+// marches d'escalier : traits en travers tous les 0,6 m (générés une fois)
+P.treads=(()=>{const p=new Path2D();for(const r of PARK.steps||[])for(let i=2;i<r.length;i+=2){const ax=r[i-2],az=r[i-1],bx=r[i],bz=r[i+1],l=Math.hypot(bx-ax,bz-az)||1,nx=-(bz-az)/l*.8,nz=(bx-ax)/l*.8;for(let d=0;d<=l;d+=.6){const x=ax+(bx-ax)*d/l,z=az+(bz-az)*d/l;p.moveTo(x+nx,z+nz);p.lineTo(x-nx,z-nz);}}return p;})();
+const SIMN=new Set(PARK.attr.filter(a=>a.site).map(a=>a.name.toLowerCase())); // tracés des attractions avec simulateur, en doré (générique)
+const TRK=PARK.tracks.map(t=>({name:t.name,p:linePath([t.pts]),hl:SIMN.has(t.name.toLowerCase())}));
+const ATT=PARK.attr;
+// vue : centre monde (m), échelle px/m
+let W=0,H=0,dpr=1,cam={x:230,z:200,s:1};
+const fitS=()=>Math.min(W/760,H/780);
+function resize(){const d=window.devicePixelRatio||1,w=view.clientWidth,h=view.clientHeight;if(d===dpr&&w===W&&h===H&&cv.width)return;dpr=d;W=w;H=h;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.width=W+'px';cv.style.height=H+'px';draw()}
+function fit(){cam={x:230,z:260,s:fitS()};draw()}
+const clampS=s=>Math.max(fitS()*.6,Math.min(12,s));
+const toS=(x,z)=>[(x-cam.x)*cam.s+W/2,(z-cam.z)*cam.s+H/2];
+const toW=(px,py)=>[(px-W/2)/cam.s+cam.x,(py-H/2)/cam.s+cam.z];
+function zoomAt(px,py,f){const [wx,wz]=toW(px,py);cam.s=clampS(cam.s*f);cam.x=wx-(px-W/2)/cam.s;cam.z=wz-(py-H/2)/cam.s;draw()}
+let raf=0;function draw(){if(!raf)raf=requestAnimationFrame(render)}
+function render(){
+  raf=0;const s=cam.s;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=COL.ground;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.translate(W/2-cam.x*s,H/2-cam.z*s);ctx.scale(s,s);
+  ctx.lineJoin='round';ctx.lineCap='round';
+  for(const p of P.plaza){ctx.fillStyle=COL.plaza;ctx.fill(p,'evenodd')}
+  for(const p of P.lawn){ctx.fillStyle=COL.lawn;ctx.fill(p,'evenodd')}
+  for(const p of P.forest){ctx.fillStyle=COL.forest;ctx.fill(p,'evenodd')}
+  ctx.fillStyle=COL.water;ctx.strokeStyle=COL.waterEdge;ctx.lineWidth=1/s;
+  for(const p of P.water){ctx.fill(p,'evenodd');ctx.stroke(p)}
+  ctx.strokeStyle=COL.water;ctx.lineWidth=Math.max(3,1.6/s);ctx.stroke(P.canal);
+  // routes et chemins : largeur réelle plancher en pixels
+  ctx.strokeStyle=COL.roadEdge;ctx.lineWidth=Math.max(6,2.6/s);ctx.stroke(P.roads);
+  ctx.strokeStyle=COL.road;ctx.lineWidth=Math.max(4.6,1.8/s);ctx.stroke(P.roads);
+  ctx.strokeStyle=COL.pathEdge;ctx.lineWidth=Math.max(2.8,1.5/s);ctx.stroke(P.paths);
+  ctx.strokeStyle=COL.path;ctx.lineWidth=Math.max(2,1.0/s);ctx.stroke(P.paths);
+  ctx.strokeStyle=COL.pathEdge;ctx.lineWidth=Math.max(3,1.8/s);ctx.stroke(P.steps);ctx.strokeStyle='#b4ad9e';ctx.lineWidth=Math.max(2.2,1.5/s);ctx.stroke(P.steps); // escaliers
+  if(s>3){ctx.lineCap='butt';ctx.strokeStyle='#857d6c';ctx.lineWidth=.08;ctx.stroke(P.treads);ctx.lineCap='round';}
+  for(const p of P.rock){ctx.fillStyle='#8a8274';ctx.fill(p,'evenodd');ctx.strokeStyle='#5d564b';ctx.lineWidth=.8/s;ctx.stroke(p)} // rochers
+  ctx.fillStyle=COL.bldFill;ctx.strokeStyle=COL.bldEdge;ctx.lineWidth=.8/s;
+  for(const p of P.bld){ctx.fill(p);ctx.stroke(p)}
+  for(const t of TRK){ctx.strokeStyle=t.hl?COL.hl:COL.track;ctx.lineWidth=t.hl?Math.max(1.2,3/s):Math.max(.8,1.5/s);ctx.stroke(t.p)}
+  ctx.restore();
+  // repères et étiquettes
+  ctx.textBaseline='middle';
+  const showAll=s>=1.1,showMid=s>=.7;
+  const placed=[];
+  const order=ATT.slice().sort((a,b)=>(a.site?1:0)-(b.site?1:0));
+  for(const a of order){
+    const [x,y]=toS(a.x,a.z);if(x<-80||y<-30||x>W+80||y>H+30)continue;
+    const hl=!!a.site;
+    ctx.beginPath();ctx.arc(x,y,hl?7:3.2,0,6.283);
+    if(hl){ctx.fillStyle='rgba(242,193,78,.95)';ctx.fill();ctx.strokeStyle='#1c2230';ctx.lineWidth=2;ctx.stroke()}
+    else{ctx.fillStyle='rgba(60,56,50,.85)';ctx.fill()}
+  }
+  ctx.font='600 12px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif';
+  for(const a of order.slice().reverse()){
+    const hl=!!a.site;if(!(hl||showAll||(showMid&&false)))continue;
+    const [x,y]=toS(a.x,a.z);if(x<-120||y<-30||x>W+120||y>H+30)continue;
+    const w=ctx.measureText(a.name).width,bx=x+(hl?11:6),by=y-(hl?0:0);
+    const r=[bx-2,by-8,w+4,16];
+    if(!hl&&placed.some(q=>r[0]<q[0]+q[2]&&r[0]+r[2]>q[0]&&r[1]<q[1]+q[3]&&r[1]+r[3]>q[1]))continue;
+    placed.push(r);
+    ctx.lineWidth=3.5;ctx.strokeStyle='rgba(235,232,220,.9)';ctx.strokeText(a.name,bx,by);
+    ctx.fillStyle=hl?'#6b4a00':COL.text;ctx.fillText(a.name,bx,by);
+  }
+}
+// interaction : glisser, molette, pincement
+const ptr=new Map();let moved=0,pd=0,dragStart=null,multi=false;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.offsetX,e.offsetY]);moved=0;if(ptr.size===1)multi=false;dragStart=[e.offsetX,e.offsetY];pd=ptr.size==2?dist2():0;cv.classList.add('drag')});
+cv.addEventListener('pointermove',e=>{
+  const p=ptr.get(e.pointerId);
+  if(!p){hover(e.offsetX,e.offsetY);return}
+  const nx=e.offsetX,ny=e.offsetY;
+  if(ptr.size==1){cam.x-=(nx-p[0])/cam.s;cam.z-=(ny-p[1])/cam.s;moved+=Math.abs(nx-p[0])+Math.abs(ny-p[1]);draw()}
+  ptr.set(e.pointerId,[nx,ny]);
+  if(ptr.size==2){const d=dist2(),m=mid2();if(pd>0)zoomAt(m[0],m[1],d/pd);pd=d;moved+=10;multi=true}
+});
+function dist2(){const [a,b]=[...ptr.values()];return Math.hypot(a[0]-b[0],a[1]-b[1])}
+function mid2(){const [a,b]=[...ptr.values()];return[(a[0]+b[0])/2,(a[1]+b[1])/2]}
+function end(e){const was=ptr.size;ptr.delete(e.pointerId);cv.classList.remove('drag');pd=0;
+  if(e.type==='pointerup'&&was==1&&!multi&&moved<(e.pointerType==='touch'?12:6))tap(e.offsetX,e.offsetY)}
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+cv.addEventListener('wheel',e=>{e.preventDefault();zoomAt(e.offsetX,e.offsetY,Math.exp(-e.deltaY*.0015))},{passive:false});
+document.getElementById('zi').onclick=()=>zoomAt(W/2,H/2,1.5);
+document.getElementById('zo').onclick=()=>zoomAt(W/2,H/2,1/1.5);
+document.getElementById('zf').onclick=fit;
+function pick(px,py){let best=null,bd=1e9;for(const a of ATT){const [x,y]=toS(a.x,a.z);const d=Math.hypot(x-px,y-py),r=(a.site?16:11)+(matchMedia('(pointer:coarse)').matches?8:0);if(d<r&&d<bd){bd=d;best=a}}return best}
+function hover(px,py){cv.classList.toggle('hit',!!pick(px,py))}
+function tap(px,py){
+  const a=pick(px,py);
+  if(!a){info.style.display='none';return}
+  if(a.site){location.href='jeu.html?type='+PT+'&lieu='+PL+'&el='+encodeURIComponent(a.site);return} // toute attraction avec simulateur
+  info.style.display='block';
+  info.innerHTML='<h2></h2><p></p>';info.firstChild.textContent=a.name;
+  info.lastChild.textContent='Pas de simulateur pour cette attraction.';
+}
+document.getElementById('legend').textContent='Doré : simulateur disponible (cliquer pour jouer)';
+// plein écran : API Fullscreen sur #view, repli CSS (la carte remplit la fenêtre) si indisponible (iOS Safari)
+let fsOn=false;const fsb=document.getElementById('fsb');
+function setFs(on){on=!!on;if(on===fsOn)return;fsOn=on;view.classList.toggle('fs',on);fsb.textContent=on?'Quitter le plein écran':'Plein écran';
+  if(on){const rq=view.requestFullscreen||view.webkitRequestFullscreen;if(rq){try{const r=rq.call(view);if(r&&r.catch)r.catch(()=>{})}catch(e){}}}
+  else{const ex=document.fullscreenElement?document.exitFullscreen:document.webkitFullscreenElement?document.webkitExitFullscreen:null;if(ex){try{const r=ex.call(document);if(r&&r.catch)r.catch(()=>{})}catch(e){}}}
+  resize();requestAnimationFrame(resize)}
+fsb.onclick=()=>setFs(!fsOn);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&fsOn)setFs(false)});
+for(const ev of ['fullscreenchange','webkitfullscreenchange'])document.addEventListener(ev,()=>{if(fsOn&&!document.fullscreenElement&&!document.webkitFullscreenElement)setFs(false);resize()});
+const onSize=()=>{resize();requestAnimationFrame(resize)};
+addEventListener('resize',onSize);addEventListener('orientationchange',onSize);
+if(window.ResizeObserver)new ResizeObserver(resize).observe(view);
+resize();fit();
+</script>
+<script>
+/* Hors ligne : service worker, seulement en http(s) (rien sous file://) */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+{
+ "name": "hourra",
+ "origin": [
+  49.13554,
+  2.56816
+ ],
+ "bbox": [
+  -130,
+  200,
+  -150,
+  110
+ ],
+ "track_ways": [
+  541427592,
+  1580221723,
+  1580221724,
+  1580086193,
+  1580086192,
+  1580086185,
+  1580086186,
+  1580086183,
+  1580086184,
+  1231613335,
+  1580086187,
+  937061488,
+  1580086188,
+  1182632576,
+  541427605,
+  1182632575,
+  1580086189,
+  541427599,
+  1182419818,
+  1580086191,
+  1580086190,
+  1580139650,
+  1580139649
+ ],
+ "start_way": 1231613335,
+ "profile": [
+  [
+   0,
+   3
+  ],
+  [
+   17,
+   3
+  ],
+  [
+   36.9,
+   3.4,
+   "lin"
+  ],
+  [
+   118,
+   31
+  ],
+  [
+   135,
+   31
+  ],
+  [
+   175,
+   22.5
+  ],
+  [
+   211,
+   20.5
+  ],
+  [
+   257,
+   16.8
+  ],
+  [
+   273,
+   16.2
+  ],
+  [
+   330,
+   14.2
+  ],
+  [
+   380,
+   12.8
+  ],
+  [
+   405,
+   12.2
+  ],
+  [
+   457,
+   8.6
+  ],
+  [
+   480,
+   8.3
+  ],
+  [
+   520,
+   7.9
+  ],
+  [
+   564,
+   7.6
+  ],
+  [
+   614,
+   4.0
+  ],
+  [
+   626,
+   3.9
+  ],
+  [
+   655,
+   3.8
+  ],
+  [
+   700,
+   3.4
+  ],
+  [
+   735,
+   3.0
+  ],
+  [
+   779.5,
+   3
+  ]
+ ],
+ "level": 3,
+ "flat": [
+  20,
+  738
+ ],
+ "keep": [
+  [
+   0,
+   17
+  ],
+  [
+   40,
+   115
+  ]
+ ],
+ "phys": {
+  "roll": 0.13,
+  "drag": 0.0016
+ },
+ "paths": {
+  "queue": [
+   1580139651,
+   1580139652,
+   1580137178,
+   1580224119,
+   1580224120,
+   1580137179,
+   1580224121,
+   1580224122,
+   1580413568,
+   1580413569,
+   1580413566,
+   1580413567,
+   1032354546
+  ],
+  "queueB": [
+   1580149150,
+   1032685209
+  ],
+  "queueLoop": 1032685208,
+  "exit": 1032354545,
+  "prom": 1220633159,
+  "qtun": 1580086194,
+  "xdown": [
+   1580416041,
+   1580086196
+  ],
+  "garA": 1580086185,
+  "garB": 1582324008,
+  "gar1": 1582324002,
+  "gar2": 1582324003,
+  "gar3": 1582324004,
+  "gar4": 1582324005,
+  "gar5": 1582324006,
+  "gar6": 1582324007
+ },
+ "polys": {
+  "station": 148160006
+ },
+ "png_scale": 5,
+ "note_osm": "Repères lus dans OSM (2026-11-16) : lift 937061488 (lift_hill), zones 'waiting' : 1580086188 en haut du lift = frein de bloc B1 (propriétaire, 2026-11-16 : frein de bloc après le lift), freins de bloc 1580086189 (B2) et 1580086191 (B3), frein final 1580086193, rail de transfert du pont 1580086185 (tr), frein avant gare 1580086183 (pre). Gare 1231613335 étiquetée station par le propriétaire (changeset 192038616) : st0/st1 lus dans OSM (quai 17,4 m). Changesets du propriétaire du 2026-11-16 après-midi : 192026103 (passerelle de file 1580137179 au-dessus du circuit), 192026350 (rocher 1580139648, voie en tunnel 1580139650, file en tunnel 1580139652), 192026807 (forêt 1580149149, eau 1580149148, file 1580149150). Rocher (propriétaire, 2026-11-16, lot 4) : les DEUX niveaux de voie passent dans le tunnel du rocher : tunnels OSM 1580139650 (voie haute) et 1580221724 (voie basse, changeset 192040289 qui découpe 541427592 en 1580221723 / 1580221724 / 541427592) ; plus de tunnels_ignore ni de tunnels_extra. Escaliers de la passerelle dessinés dans OSM (changeset 192040396) : 1580224119 (montée), 1580224120, passerelle 1580137179, 1580224121, 1580224122 (descente). Mise à jour du 2026-11-17 (changesets 192068298, 192068774) : file prolongée après l'escalier 1580224122 par 1580413568, passage SOUS le nouveau rocher (1580413569, tunnel), 1580413566, second passage couvert 1580413567 puis 1032354546 ; escalier 1580086195 supprimé, 1032685209 monte directement à l'entrée du quai ; sortie : chemin 1580416041 puis escalier 1580086196 ; rochers : relation 22083041 (anneaux 1580139648 et 1580413570/1580413564/1580413565/1580413571) et 1580413572.",
+ "note_osm_33b": "Réimport du 2026-11-20 (issue #33, suite) : tags des voies de garage corrigés par le propriétaire (1582324002…006 entretien, 1582324007 maintenance) ; osm_brakes retiré : la règle par position (dernière zone avant le tronçon mobile = frein final) redonne blk1-3 / brk / tr / pre.",
+ "note_osm_33": "Réimport du 2026-11-20 (issue #33) : garage dessiné dans OSM par le propriétaire (20/11) : rail mobile du parcours 1580086185 (moving, rail A, repères tr0/tr1), rail du chariot 1582324008 (moving, garB), 6 voies 1582324002…1582324007 (gar1…gar6 : écartement, distance au circuit et longueur lus dans OSM par sites/hourra.js) ; tag de ces voies cassé dans OSM (roller_coaster:track=« entretienlayer=1_roller_coaster=track_… », copier-coller) : à corriger en maintenance. Frein final 1580086193 tagué brake_run.",
+ "queue_paths": [
+  "queue",
+  "queueB",
+  "queueLoop",
+  "qtun"
+ ]
+}

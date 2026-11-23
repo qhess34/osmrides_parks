@@ -1,0 +1,269 @@
+{
+ "name": "goudurix",
+ "origin": [
+  49.13204025,
+  2.57090155
+ ],
+ "bbox": [
+  -90,
+  120,
+  -60,
+  170
+ ],
+ "track_ways": [
+  541092977,
+  937067647,
+  1580112198,
+  541092982,
+  1580112199,
+  541092983,
+  541092984,
+  1181620309,
+  1181620310,
+  541092985,
+  1181620311,
+  541092986,
+  1181620312,
+  541092987,
+  541092988,
+  541092989,
+  541092991,
+  541092990,
+  541092992,
+  541092993,
+  1580112200,
+  541092979,
+  1580112203,
+  1580112202
+ ],
+ "start_way": 937067647,
+ "profile": [
+  [
+   0.0,
+   3
+  ],
+  [
+   20.0,
+   3
+  ],
+  [
+   27.0,
+   0.9
+  ],
+  [
+   31.2,
+   0.9,
+   "lin"
+  ],
+  [
+   113.8,
+   36
+  ],
+  [
+   123,
+   35.8
+  ],
+  [
+   140.0,
+   34.5
+  ],
+  [
+   168.0,
+   34
+  ],
+  [
+   194.0,
+   2.7
+  ],
+  [
+   206.0,
+   7
+  ],
+  [
+   222.0,
+   17
+  ],
+  [
+   236.0,
+   22
+  ],
+  [
+   248.0,
+   12
+  ],
+  [
+   256.0,
+   15
+  ],
+  [
+   262.0,
+   20
+  ],
+  [
+   272.0,
+   5
+  ],
+  [
+   280.0,
+   4
+  ],
+  [
+   292.0,
+   4.3
+  ],
+  [
+   304.0,
+   4.5
+  ],
+  [
+   322.0,
+   18
+  ],
+  [
+   334.0,
+   11
+  ],
+  [
+   342.0,
+   3.5
+  ],
+  [
+   350.0,
+   14
+  ],
+  [
+   362.0,
+   19
+  ],
+  [
+   372.0,
+   12
+  ],
+  [
+   382.0,
+   4
+  ],
+  [
+   400.0,
+   4
+  ],
+  [
+   460.4,
+   4
+  ],
+  [
+   480.4,
+   4
+  ],
+  [
+   540.4,
+   6
+  ],
+  [
+   558.4,
+   9
+  ],
+  [
+   570.4,
+   8
+  ],
+  [
+   582.4,
+   10
+  ],
+  [
+   594.4,
+   7
+  ],
+  [
+   610.4,
+   5
+  ],
+  [
+   660.4,
+   4
+  ],
+  [
+   710.4,
+   3
+  ],
+  [
+   807.4,
+   3
+  ]
+ ],
+ "level": 3,
+ "flat": [
+  20,
+  762.4
+ ],
+ "tags": {},
+ "keep": [
+  [
+   0,
+   31
+  ],
+  [
+   390,
+   470
+  ],
+  [
+   762.4,
+   807.4
+  ]
+ ],
+ "phys": {
+  "roll": 0.02,
+  "drag": 0.0004
+ },
+ "paths": {
+  "queue": 1102233771,
+  "prom": 132709980,
+  "prom2": 132709988,
+  "qlink": 161214274,
+  "garage": 1221386549,
+  "gS": 1580112201,
+  "q": 1580112206,
+  "qloop": 1580112207,
+  "qin": [
+   1580112204,
+   1580112205
+  ],
+  "xout": [
+   1580112210,
+   1580112211,
+   1580112209
+  ]
+ },
+ "polys": {
+  "station": 148159470
+ },
+ "png_scale": 5,
+ "drop_ways": [],
+ "inversions": [
+  {
+   "type": "loop",
+   "osm": true,
+   "s0": 392,
+   "s1": 468,
+   "h": 22,
+   "note": "Loop dessiné dans OSM par le propriétaire (2026-11-16, way 541092988 : aller, retour de 10,5 m au sommet, aller) : tracé au sol d'OSM. 26 m = hauteur du SOMMET au-dessus du sol (propriétaire, 2026-11-16, 3e série) : base à 4 m (ESTIMÉE, comme les points voisins) + boucle de 22 m = sommet à 26 m."
+  },
+  {
+   "type": "corkscrew",
+   "s0": 548.4,
+   "s1": 602.4,
+   "n": 2,
+   "r": 3,
+   "note": "Double Corkscrew : deux vrilles de 360° (propriétaire), déport hélicoïdal ESTIMÉ ; OSM ne le contredit pas"
+  }
+ ],
+ "note_osm": "Repères lus dans OSM (2026-11-16) : gare 937067647 (station), lift 541092982 (lift_hill, s 31–114), freins 'waiting' : 1580112200 = B1 (s 665–691), 1580112203 = frein final (s 745–777, voie parallèle à la gare). Cuvette avant le lift (propriétaire) raccourcie à s 20–31 (le lift OSM commence à 31 m). Mise à jour du 2026-11-17 (changeset 192067832) : tronçon mobile 1580112198 retracé (point ajouté) ; croisement s≈313 × s≈340 tombé à 1,7 m : montée vers 18 m commencée dès s 304 (point 312 retiré, ESTIMÉ).",
+ "note_osm_33b": "Réimport du 2026-11-20 (issue #33, suite) : réponse du propriétaire (20/11) : le train s arrête au brake_run 1580112200 PUIS va en zone waiting 1580112203 avant la gare : frein final = dernière zone avant la gare (règle par position de tools/make_site.py), donc B1 = 1580112200, frein final = 1580112203 sans osm_brakes ; tag moving de 541092986 corrigé dans OSM (roles retiré).",
+ "note_osm_33": "Réimport du 2026-11-20 (issue #33, changesets du propriétaire du 20/11) : B1 1580112200 tagué brake_run, frein final 1580112203 resté waiting (osm_brakes garde blk1 / brk : QUESTION au propriétaire, la règle brake_run = frein final désignerait 1580112200) ; 541092986 (batwing, au milieu du parcours) tagué roller_coaster:track=moving : rôle forcé à parcours (roles) en attendant la réponse (probable erreur de saisie).",
+ "queue_paths": [
+  "q",
+  "qloop",
+  "qin"
+ ]
+}

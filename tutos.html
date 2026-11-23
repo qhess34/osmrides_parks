@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1626">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OSMrides">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>Tutoriels — OSMrides</title>
+<meta name="description" content="Guides courts du jeu OSMrides : premiers pas, zones de freinage, garage, file d'attente, mobile, sauvegarde.">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="wrap">
+<header class="top">
+  <h1>Tutoriels</h1>
+  <p>Les commandes et messages cités ici sont ceux du jeu. Les captures viennent de vraies parties.</p>
+  <nav class="nav" aria-label="Navigation">
+    <a class="btn main" href="index.html#jouer">Jouer</a>
+    <a class="btn" href="index.html">Écran titre</a>
+    <a class="btn" href="plan.html?type=parc&amp;lieu=asterix">Plan du parc</a>
+  </nav>
+</header>
+<main id="main">
+<nav class="lessons" aria-label="Leçons">
+<a class="desk" href="#premiers-pas"><span class="num" aria-hidden="true">1</span><span>Premiers pas</span></a>
+<a class="desk" href="#freinage"><span class="num" aria-hidden="true">2</span><span>Zones de freinage</span></a>
+<a class="desk" href="#garage"><span class="num" aria-hidden="true">3</span><span>Garer et sortir un train</span></a>
+<a class="desk" href="#file"><span class="num" aria-hidden="true">4</span><span>File d'attente</span></a>
+<a class="desk" href="#mobile"><span class="num" aria-hidden="true">5</span><span>Sur mobile</span></a>
+<a class="desk" href="#sauvegarde"><span class="num" aria-hidden="true">6</span><span>Bac à sable et sauvegarde</span></a>
+</nav>
+<p class="note"><b>Essayer</b> ouvre l'attraction en bac à sable : sans budget, météo ni pannes, pour s'entraîner sans risque. Votre partie en carrière n'est pas touchée.</p>
+<article id="premiers-pas" class="lesson" aria-labelledby="h-pp">
+<div class="lhead"><span class="num" aria-hidden="true">1</span><h2 id="h-pp"><span class="sr">Leçon 1 : </span>Premiers pas</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer sur Zeus</a></div>
+<p>Exemple sur Tonnerre 2 Zeus. Le jeu démarre en mode <b>Auto</b>, un train est en gare, l'entrée est fermée.</p>
+<figure><img src="img/tutos/01-pupitre.jpg" width="1100" height="690" loading="lazy" alt="Le pupitre de commande de Tonnerre 2 Zeus au démarrage, avec le synoptique du circuit"><figcaption>Le pupitre : entrée, évacuation, Auto · Manuel, portillons, départ, arrêt d'urgence, voyants, puis les sections Gare, Lift, Zones de freinage et Garage.</figcaption></figure>
+<ol>
+<li><b>Ouvrir l'entrée.</b> Bouton « Entrée ouverte » du pupitre (ou clic sur le portail à l'entrée de la file). Le journal annonce « Entrée ouverte : les visiteurs entrent dans la file. » Fermée, plus personne n'entre, mais ceux qui sont déjà dans la file continuent d'embarquer.</li>
+<li><b>Laisser le quai se remplir.</b> Les visiteurs se rangent derrière les portillons, deux au plus par portillon, un portillon par wagon.</li>
+<li><b>Ouvrir les sécurités.</b> Un train arrive en gare lapbars verrouillés : le journal le rappelle. Bouton « Sécurités » du pupitre : les lapbars (harnais sur OzIris et Goudurix) se relèvent sur chaque place ; le voyant passe à l'ambre. Rien ne s'ouvre seul, ni en auto ni en manuel.</li>
+<li><b>Débarquement.</b> Il ne commence qu'une fois les sécurités ouvertes : les passagers descendent côté sortie.</li>
+<li><b>Embarquement.</b> Bouton « Portillons » : le journal annonce « Portillons ouverts : embarquement. » Les visiteurs montent dans les places dont les sécurités sont ouvertes. Le bouton est refusé s'il n'y a aucun train à quai prêt à embarquer.</li>
+<li><b>Fermer les portillons</b> avec le même bouton quand l'embarquement est fini. En <b>Auto</b>, attendez le message « … est prêt au départ : fermez les portillons, puis verrouillez les sécurités… » (train plein ou attente écoulée).</li>
+<li><b>Verrouiller et vérifier.</b> Portillons fermés, bouton « Sécurités » : le verrouillage lance la vérification. Les deux opérateurs passent wagon par wagon, abaissent chaque lapbar ou harnais resté ouvert puis valident : les voyants « Op. 1 » et « Op. 2 » s'allument l'un après l'autre. Portillons encore ouverts, le verrouillage est refusé.</li>
+<li><b>Départ.</b> En <b>Auto</b>, le train part seul une fois les lapbars validés (« … part avec 28 passagers. »). En <b>Manuel</b>, le journal dit « Lapbars validés par les deux opérateurs : départ possible. » et le bouton « Départ » s'allume. Sécurités ouvertes, le départ est refusé : « Départ refusé : sécurités ouvertes. »</li>
+</ol>
+<div class="pair">
+<figure><img src="img/tutos/03-portillons.jpg" width="1100" height="690" loading="lazy" alt="Le quai de Zeus portillons ouverts, des visiteurs derrière chaque portillon, le train à quai"><figcaption>Portillons ouverts : les visiteurs montent dans le wagon en face.</figcaption></figure>
+<figure><img src="img/tutos/04-lapbars.jpg" width="349" height="261" loading="lazy" alt="Voyants Op. 1 éteint et Op. 2 allumé, sélecteur Validation Normale · By-pass"><figcaption>Les voyants « Lapbars validés » pendant la vérification : ici Op. 2 a validé, Op. 1 pas encore.</figcaption></figure>
+</div>
+<div class="note"><p><b>By-pass.</b> Le sélecteur « Validation Normale · By-pass » permet de partir sans validation des lapbars, au risque d'un incident et d'une amende.</p>
+<p><b>Arrêt d'urgence.</b> Le gros bouton rouge stoppe le lift et bloque départs et manœuvres ; appuyez de nouveau pour réarmer. Par orage, suspendez les départs : chaque train envoyé sous l'orage coûte une amende.</p></div>
+</article>
+
+<article id="freinage" class="lesson" aria-labelledby="h-fr">
+<div class="lhead"><span class="num" aria-hidden="true">2</span><h2 id="h-fr"><span class="sr">Leçon 2 : </span>Zones de freinage</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=hourra&amp;mode=sandbox">Essayer à la Trace du Hourra</a></div>
+<p>Sous les gros boutons, le pupitre est découpé en sections : <b>Gare</b>, <b>Lift</b>, <b>Zones de freinage</b> (freins de bloc, frein final…) et <b>Garage</b>. Les colonnes sont Mode, Freins, Avant, Arrière, Arrêt. Vous commandez une zone, jamais un train.</p>
+<figure><img src="img/tutos/05b-zones-pupitre.jpg" width="321" height="500" loading="lazy" alt="Sections Gare, Lift et Zones de freinage de la Trace du Hourra, Bloc 1 en MANU"><figcaption>La Trace du Hourra : Bloc 1 est passé en MANU (bouton « MANU » allumé), les autres zones restent en AUTO.</figcaption></figure>
+<h3>AUTO et MANU</h3>
+<ul>
+<li>Chaque zone de freinage est en <b>AUTO</b> par défaut : le cantonnement serre et relâche seul ses freins. Un train ne franchit un frein de bloc que si le canton suivant est libre.</li>
+<li>Un clic sur « AUTO » passe la zone en <b>MANU</b> : le bouton « F » (freins) serre ou relâche à votre main, et les boutons AV, AR, STOP commandent ses moteurs s'il y en a. Le journal note « Bloc 1 en MANU : freins commandés au pupitre. »</li>
+<li>Le relâchement d'un frein est <b>refusé</b> si la section suivante est occupée : « Canton suivant occupé : Train 1 reste au frein de bloc 1. »</li>
+<li>« TOUT AUTO » remet toutes les zones de freinage en AUTO d'un coup.</li>
+<li>Gare : les freins se serrent seuls tant qu'un train est à quai (voyant SERRÉS) et ne se relâchent que par la séquence Départ, portillons fermés et lapbars validés (voyant LIBRES).</li>
+</ul>
+<h3>Retenue au lift</h3>
+<figure><img src="img/tutos/06-lift.jpg" width="1100" height="690" loading="lazy" alt="Un train arrêté sur le lift de Zeus, le bouton ARR du lift allumé et le message du journal"><figcaption>Le lift mis à l'arrêt (« ARR ») : « Lift à l'arrêt : la chaîne est stoppée, un train sur le lift y reste. »</figcaption></figure>
+<ul>
+<li><b>Un seul train à la fois sur le lift.</b> Le suivant attend au pied : « Train 2 attend au pied du lift : un train est sur le lift. »</li>
+<li>Le train arrivé en haut est <b>retenu</b> (chaîne arrêtée pour lui) tant que la zone de freinage suivante est occupée : le premier frein de bloc s'il y en a un, sinon le frein final.</li>
+<li>Vous pouvez aussi arrêter le lift à la main avec « ARR » (section Lift) ; « MAR » le relance.</li>
+</ul>
+</article>
+
+<article id="garage" class="lesson" aria-labelledby="h-ga">
+<div class="lhead"><span class="num" aria-hidden="true">3</span><h2 id="h-ga"><span class="sr">Leçon 3 : </span>Garer et sortir un train</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer sur Zeus</a></div>
+<p>Le garage se commande aux boutons de la section « Garage » et des zones de voie. Règles communes à toutes les attractions :</p>
+<ul>
+<li>le train à garer est <b>vide</b>, portillons fermés ; un train avec passagers ne quitte jamais le circuit ;</li>
+<li>l'appareil de voie (aiguillage, pont, rail mobile) ne bouge pas si un train est dessus ou tout près ; attendez qu'il soit en place avant de faire rouler le train ;</li>
+<li>chaque voie de garage a un bouton « DISPATCH » : l'appareil étant sur cette voie, il fait <b>entrer</b> le train prêt (vide à quai, sur le frein final ou sur le pont) s'il y a de la place, sinon il fait <b>sortir</b> le train de tête ; le sens (avant ou arrière) est choisi seul, l'arrêt est automatique, avant le butoir. Si le pont ou la gare porte déjà un train et que la voie est pleine, rien ne sort : il n'y a la place que pour un train ;</li>
+<li>à côté, le bouton <span class="k">F</span> de la voie force ses freins : serrés, ils arrêtent aussitôt le train qui entre ou qui sort, et DISPATCH est refusé ; relâchés, le train repart au prochain DISPATCH ;</li>
+<li>pour retenir un autre train pendant la manœuvre, passez le frein final en MANU et serrez-le (« F ») ;</li>
+<li>en fin de manœuvre, remettez l'appareil sur <b>P</b> (circuit) et appuyez sur « TOUT AUTO ». Les refus s'affichent au journal.</li>
+</ul>
+<div class="site"><div class="lhead"><h3>Tonnerre 2 Zeus : aiguillage et gare</h3><a class="btn try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer</a></div>
+<figure><img src="img/tutos/07-garage-zeus.jpg" width="1100" height="690" loading="lazy" alt="Le garage de Zeus : aiguillage à droite de la gare, voie de garage avec un train"><figcaption>Zeus : l'aiguillage dans le prolongement de la gare, la voie de garage à droite.</figcaption></figure>
+<p><b>Garer</b> : train vide à quai, aiguillage sur <span class="k">1</span> (attendre qu'il soit en place), « DISPATCH » de la voie : le train avance jusqu'au fond du garage, aiguillage sur <span class="k">P</span>. <b>Sortir</b> : gare libre, aiguillage sur <span class="k">1</span>, « DISPATCH » : il recule jusqu'en gare, aiguillage sur <span class="k">P</span>.</p></div>
+<div class="site"><div class="lhead"><h3>La Trace du Hourra : rail mobile du parcours et chariot</h3><a class="btn try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=hourra&amp;mode=sandbox">Essayer</a></div>
+<figure><img src="img/tutos/07-garage-hourra.jpg" width="1100" height="690" loading="lazy" alt="Le garage de la Trace du Hourra : six voies droites parallèles et le pont transbordeur"><figcaption>Trace du Hourra : six voies droites, un bob par voie, desservies par un pont transbordeur droit.</figcaption></figure>
+<p>Deux éléments mobiles indépendants : le <b>rail mobile du parcours</b> (boutons <span class="k">C</span> sur le circuit, <span class="k">E</span> retiré) et le <b>chariot</b> du pont (<span class="k">G</span>, <span class="k">1</span> à <span class="k">6</span>). <b>Garer</b> : train vide, frein final en MANU et serré (il s'arrête avant le pont), rail mobile retiré, chariot sur <span class="k">G</span>, relâcher, « Frein final AV » (il passe sur le rail du chariot), chariot face à une voie libre (il emporte le train), « DISPATCH » de cette voie (il y entre), chariot au repos, rail mobile sur le circuit, « TOUT AUTO ». <b>Sortir</b> : chariot face à la voie, « DISPATCH » de la voie (il recule sur le rail du chariot), rail mobile retiré, chariot sur <span class="k">G</span> (dernier canton libre), « Rail du chariot AV » vers le frein avant gare puis la gare, puis le rail mobile sur le circuit.</p></div>
+<div class="site"><div class="lhead"><h3>OzIris : le rail du parcours va chercher les trains</h3><a class="btn try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=oziris&amp;mode=sandbox">Essayer</a></div>
+<figure><img src="img/tutos/07-garage-oziris.jpg" width="1100" height="690" loading="lazy" alt="Le garage d'OzIris : trois voies de maintenance et le pont à rail unique"><figcaption>OzIris : trois voies de maintenance parallèles au frein final, en amont du pont.</figcaption></figure>
+<p>Le pont porte <b>un seul rail</b>, le « Rail du pont » : c'est la fin du circuit qui vient chercher les trains. En <span class="k">P</span> il est en ligne avec le circuit ; face à une voie (<span class="k">1</span> à <span class="k">3</span>) le circuit est interrompu et les trains attendent avant le pont. Les voies sont en arrière du pont. <b>Garer</b> : train vide (« Gare AV »), « Rail du pont » en MANU et freins serrés (il s'y arrête), pont sur une voie libre (il emporte le train), relâcher les freins puis « DISPATCH » de cette voie : il recule dans la voie ; pont sur <span class="k">P</span>, « TOUT AUTO ». <b>Sortir</b> : pont face à la voie, « DISPATCH » de la voie (il avance sur le rail), pont sur <span class="k">P</span> si le dernier canton est libre : il repart vers la gare.</p></div>
+<div class="site"><div class="lhead"><h3>Goudurix : marche arrière depuis la gare, aiguillage rotatif</h3><a class="btn try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=goudurix&amp;mode=sandbox">Essayer</a></div>
+<figure><img src="img/tutos/07-garage-goudurix.jpg" width="1100" height="690" loading="lazy" alt="Le garage de Goudurix : voie de maintenance en amont de la gare et aiguillage rotatif"><figcaption>Goudurix : la voie de maintenance se trouve en amont de la gare, à une quarantaine de mètres de l'arrêt (position estimée).</figcaption></figure>
+<p>L'aiguillage est un <b>rail rotatif</b> qui tourne sur lui-même autour du tube de rail. <b>Garer</b> : train vide à quai, portillons fermés, aiguillage sur <span class="k">1</span> (attendre la fin de la rotation), « DISPATCH » de la voie : le train recule de la gare jusqu'au fond de la voie, aiguillage sur <span class="k">P</span>. <b>Sortir</b> : gare libre, aiguillage sur <span class="k">1</span>, « DISPATCH » : il avance jusqu'en gare, aiguillage sur <span class="k">P</span>.</p></div>
+<p class="note">Les emplacements des garages et les vitesses de manœuvre sont en partie estimés ; le détail est dans les notes de chaque attraction.</p>
+</article>
+
+<article id="file" class="lesson" aria-labelledby="h-fi">
+<div class="lhead"><span class="num" aria-hidden="true">4</span><h2 id="h-fi"><span class="sr">Leçon 4 : </span>File d'attente</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer sur Zeus</a></div>
+<figure><img src="img/tutos/10-file.jpg" width="1100" height="690" loading="lazy" alt="La file d'attente de Zeus pleine de visiteurs, vue de dessus, avec les boucles et la gare"><figcaption>La file de Zeus : les visiteurs suivent le chemin, les boucles de la file sont visibles à l'écran.</figcaption></figure>
+<ul>
+<li><b>Les barrières.</b> Les barrières de la file sont posées par l'éditeur de l'attraction. Chacune s'ouvre et se ferme seule : <b>cliquez dessus sur la carte</b> (au toucher : touchez-la). Pour voir la file qui passe sous la gare, utilisez « Masquer la gare » au-dessus de la carte.</li>
+<li><b>Chemins.</b> À chaque embranchement, les visiteurs prennent le plus court chemin vers la gare qui ne passe que par des barrières ouvertes. Fermer le raccourci les envoie dans la boucle : file plus longue, plus de capacité ; l'ouvrir raccourcit l'attente.</li>
+<li>Une <b>barrière fermée</b> arrête tous ceux qui veulent la franchir : s'il n'y a aucun chemin ouvert, ils attendent devant ; barrière d'entrée fermée, plus personne n'entre.</li>
+<li><b>Évacuer la file.</b> Le bouton « Évacuer la file » fait repartir tout le monde vers l'entrée ; les évacués s'arrêtent aussi devant une barrière fermée : le voyant « Évacuation en cours » passe au rouge, le journal nomme la barrière et la carte l'entoure de rouge ; ouvrez-la. Pendant l'évacuation, personne n'entre dans la file ; le journal annonce « Évacuation terminée, la file peut reprendre. »</li>
+<li>Le curseur de <b>fréquentation</b> du panneau de droite règle l'afflux, de parc vide à saturé. Ceux qui attendent trop longtemps abandonnent et baissent la satisfaction.</li>
+</ul>
+</article>
+
+<article id="mobile" class="lesson" aria-labelledby="h-mo">
+<div class="lhead"><span class="num" aria-hidden="true">5</span><h2 id="h-mo"><span class="sr">Leçon 5 : </span>Sur mobile</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer sur Zeus</a></div>
+<div class="pair">
+<figure><img src="img/tutos/11-mobile-carte.jpg" width="390" height="844" loading="lazy" alt="Zeus sur iPhone, onglet Carte, barre du haut et onglets en bas"><figcaption>Onglet « Carte » sur iPhone.</figcaption></figure>
+<figure><img src="img/tutos/12-mobile-pupitre.jpg" width="390" height="844" loading="lazy" alt="Zeus sur iPhone, onglet Pupitre avec le pupitre de commande"><figcaption>Onglet « Pupitre » : les mêmes commandes, boutons de 44 px au moins.</figcaption></figure>
+</div>
+<ul>
+<li><b>Trois onglets</b> en bas : « Carte », « Pupitre » et « Journal ». Sur téléphone et tablette étroite, le pupitre et le journal sont des tiroirs ; touchez de nouveau l'onglet actif pour revenir à la carte.</li>
+<li><b>Gestes.</b> Un doigt déplace la carte, deux doigts zooment. Touchez une barrière de la file pour l'ouvrir ou la fermer, ou un numéro de train dans le synoptique pour le suivre.</li>
+<li><b>Plein écran.</b> Bouton « Plein écran » sous la carte. Une barre en haut garde l'heure et le dernier message ; « Pupitre » ouvre le pupitre par-dessus la carte, « Quitter » ressort du plein écran. Si le navigateur n'a pas d'API plein écran, le jeu se rabat sur un plein écran de la page.</li>
+<li><b>Paysage.</b> Tournez l'appareil : l'écran se réorganise.</li>
+<li><b>Installer.</b> Depuis l'écran titre en ligne (ligne « Installer ») : Android / Chrome, ligne « Installer » du menu ; iPhone et iPad (Safari), Partager puis « Sur l'écran d'accueil ». L'application fonctionne ensuite <b>hors ligne</b>.</li>
+</ul>
+<figure><img src="img/tutos/13-mobile-plein-ecran.jpg" width="390" height="844" loading="lazy" alt="Zeus sur iPhone, carte en plein écran"><figcaption>La carte en plein écran sur iPhone.</figcaption></figure>
+<p class="note">Ces gestes sont testés avec des événements tactiles simulés, pas sur un appareil réel.</p>
+</article>
+
+<article id="sauvegarde" class="lesson" aria-labelledby="h-sa">
+<div class="lhead"><span class="num" aria-hidden="true">6</span><h2 id="h-sa"><span class="sr">Leçon 6 : </span>Bac à sable et sauvegarde</h2><a class="btn green try" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus&amp;mode=sandbox">Essayer sur Zeus</a></div>
+<ul>
+<li><b>Carrière</b> : budget de départ, usure des éléments, pannes (lift, freins, lapbars), météo et orages ; chaque passager rapporte 5 €, les salaires (environ 39 € par heure de jeu) sont prélevés en continu ; le bouton « Bilan de l'exploitation » du pupitre donne les statistiques cumulées ; sous −2 000 € de budget, la partie s'arrête. Le jeu est continu : l'horloge tourne de 10:00 à 19:00 puis repart à 10:00 sans rien remettre à zéro, et l'attraction ne ferme que si vous fermez l'entrée.</li>
+<li><b>Bac à sable</b> : ni budget, ni météo, ni pannes, pour s'entraîner aux manœuvres. L'en-tête du jeu affiche « Bac à sable ».</li>
+<li>Le mode se choisit sur l<a href="index.html#jouer">&#39;écran de choix des attractions</a> (bouton « Jouer ») avant d'ouvrir une attraction.</li>
+<li><b>Sauvegarde automatique</b> : séparée par attraction et par mode, enregistrée dans le navigateur à la fermeture ou au changement de page, et toutes les 30 secondes. Le bouton « Continuer » de l'écran titre rouvre la dernière partie jouée, et la vignette de chaque attraction affiche « Partie en cours — hh:mm ». Elle ne se synchronise pas entre appareils, et vider les données du site l'efface.</li>
+<li><b>Nouvelle partie</b> : bouton « ? » (aide) du jeu, puis « Nouvelle partie ». Une fenêtre propose « Carrière », « Bac à sable » ou « Annuler » : elle efface la sauvegarde de cette attraction dans le mode choisi, l'autre mode est conservé.</li>
+</ul>
+<figure><img src="img/tutos/14-nouvelle-partie.jpg" width="1100" height="690" loading="lazy" alt="La fenêtre Nouvelle partie du jeu avec les boutons Carrière, Bac à sable et Annuler"><figcaption>La fenêtre « Nouvelle partie ».</figcaption></figure>
+</article>
+</main>
+<footer>
+  <p><a href="index.html">Écran titre</a> · <a href="https://github.com/qhess34/osmrides">À propos du jeu</a> · <a href="plan.html?type=parc&amp;lieu=asterix">Plan du parc</a></p>
+  <p>Jeu de fan non officiel, sans lien avec le Parc Astérix. Tracés au sol et alentours : © contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (ODbL).</p>
+</footer>
+</div>
+<script>
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+</script>
+</body>
+</html>

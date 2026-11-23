@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1626">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OSMrides">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>OSMrides — simulateurs d'exploitation du Parc Astérix</title>
+<meta name="description" content="OSMrides : jeu de fan, devenez chef d'attraction du Parc Astérix, en vue aérienne sur le tracé réel.">
+<link rel="stylesheet" href="site.css">
+<style>
+html,body{height:100%;margin:0;overflow:hidden;background:#0f1626}
+body{padding:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#bg{position:fixed;inset:0;width:100%;height:100%;display:block}
+#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 75% at 50% 42%,rgba(15,22,38,.22),rgba(15,22,38,.85)),rgba(15,22,38,.34)}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:max(14px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));transition:opacity .45s ease,transform .45s ease,visibility 0s linear 0s}
+.screen.off{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.985);transition:opacity .35s ease,transform .35s ease,visibility 0s linear .35s}
+.hero{text-align:center}
+.hero h1{margin:0;color:var(--gold);font-size:clamp(54px,15vh,104px);line-height:1;letter-spacing:.14em;padding-left:.14em;text-shadow:0 3px 0 #0008,0 8px 28px #000a}
+.hero h1{display:flex;align-items:center}.hero h1 .logo{height:1.05em;width:1.05em;margin-right:.3em;flex:none;filter:drop-shadow(0 6px 18px #000a)}
+@media(max-width:700px){.hero h1{font-size:11.5vw;letter-spacing:.06em;padding-left:0;white-space:nowrap;justify-content:center}}
+.hero p{margin:8px 0 0;color:#c4cde2;font-size:clamp(13px,2.2vh,16px);letter-spacing:.06em;text-shadow:0 1px 8px #000}
+.menu{width:min(360px,100%);display:flex;flex-direction:column;gap:9px}
+.menu .lcd{margin-bottom:3px;min-height:46px}
+.mrow{justify-content:flex-start;width:100%;min-height:50px;font-size:14px;letter-spacing:1.2px}
+.mrow small{margin-left:auto;font-size:10px;letter-spacing:.5px;opacity:.8;text-transform:none;font-weight:500;text-align:right}
+.mrow[hidden]{display:none}
+.foot{position:fixed;left:0;right:0;bottom:max(8px,env(safe-area-inset-bottom));text-align:center;font-size:11.5px;color:#8392b3;padding:0 16px;text-shadow:0 1px 6px #000}
+.foot a{color:#aab6d2}
+/* choix de l'attraction */
+.pick{justify-content:flex-start;padding-top:max(14px,env(safe-area-inset-top));overflow:auto}
+.pick .bar{width:min(960px,100%);display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.pick h2{margin:0;font-size:clamp(17px,3vh,22px);color:var(--gold);letter-spacing:.04em;flex:1 1 180px}
+.seg{display:flex;gap:8px}.seg .btn{min-height:44px;padding:6px 14px;font-size:12px}
+.tiles{width:min(960px,100%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:700px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+a.tile{display:block;background:linear-gradient(160deg,#474d57,#2b2f36 60%,#23262c);border:2px solid #14161a;border-radius:10px;padding:7px;color:inherit;text-decoration:none;box-shadow:inset 0 1px 0 #6a717d,0 6px 18px #0009;transition:transform .15s,box-shadow .15s}
+a.tile:hover,a.tile:focus-visible{transform:translateY(-2px);box-shadow:inset 0 1px 0 #6a717d,0 0 0 2px var(--gold),0 8px 22px #000b}
+a.tile img{display:block;width:100%;height:auto;aspect-ratio:7/4;object-fit:cover;border-radius:5px;border:1px solid #0b0d10;background:#1c2230}
+a.tile h3{margin:7px 2px 0;font-size:clamp(14px,2.4vh,17px);color:#f3f4f7;line-height:1.2}
+a.tile p{margin:1px 2px 0;font-size:12px;color:#aeb6c6;line-height:1.3}
+a.tile .prog{display:block;margin:5px 0 0;padding:4px 6px;border-radius:4px;font:11.5px/1.25 ui-monospace,Menlo,Consolas,monospace;background:#0b1a11;color:#7dffa8;border:1px solid #05080a;min-height:1.6em}
+a.tile .prog:empty::before{content:'Nouvelle partie';color:#4f8e69}
+@media(orientation:landscape) and (max-height:520px){
+  .screen{gap:10px}
+  #home{flex-direction:row;gap:6vw}
+  .hero{text-align:left}.hero h1{font-size:clamp(46px,18vh,90px)}
+  .menu{gap:6px;width:min(330px,46vw)}.mrow{min-height:44px}.menu .lcd{min-height:40px;padding:5px 8px}
+  .pick .bar{gap:6px 12px}
+  a.tile p{display:none}a.tile h3{margin-top:5px}
+}
+@media(max-height:620px) and (orientation:portrait){.hero h1{font-size:60px}.mrow{min-height:46px}.menu{gap:7px}}
+@media(prefers-reduced-motion:reduce){.screen,.screen.off{transition:none}}
+.tiles[hidden],.card[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="veil" aria-hidden="true"></div>
+
+<main>
+<section id="home" class="screen" aria-label="Écran titre">
+  <div class="hero">
+    <h1><img class="logo" src="img/logo/logo.svg" alt="">OSMrides</h1>
+    <p>Simulateurs d'exploitation du Parc Astérix</p>
+  </div>
+  <nav class="menu desk" aria-label="Menu principal">
+    <div class="lcd" id="lcd" role="status" aria-live="polite">Aucune partie en cours.</div>
+    <a class="btn green mrow" id="rCont" href="#" hidden><i class="lp"></i>Continuer<small id="contInfo"></small></a>
+    <a class="btn blue mrow lit" id="rPlay" href="#jouer"><i class="lp"></i>Jouer</a>
+    <a class="btn mrow" id="rPlan" href="plan.html"><i class="lp"></i>Plan du parc</a>
+    <a class="btn mrow" href="tutos.html"><i class="lp"></i>Tutoriels</a>
+    <button class="btn amber mrow" id="rInst" type="button" hidden><i class="lp"></i>Installer</button>
+  </nav>
+  <div class="foot">Jeu de fan non officiel, sans lien avec le Parc Astérix · © contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://github.com/qhess34/osmrides">À propos du jeu</a></div>
+</main>
+
+<section id="pickScr" class="screen pick off" aria-label="Choix de l'attraction">
+  <div class="bar">
+    <a class="btn" id="back" href="#">Retour</a>
+    <h2 id="pickTitre">Choisir une attraction</h2>
+    <div class="seg" role="group" aria-label="Mode de jeu">
+      <button class="btn" id="mCareer" type="button" aria-pressed="true"><i class="lp"></i>Carrière</button>
+      <button class="btn" id="mSand" type="button" aria-pressed="false"><i class="lp"></i>Bac à sable</button>
+    </div>
+  </div>
+  <div class="lcd bar" id="modeTxt" style="width:min(960px,100%);min-height:0">budget, météo et pannes</div>
+  <div class="tiles" id="niv" hidden></div>
+  <div class="tiles" id="els">
+    <a class="tile card" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=zeus" data-type="parc" data-lieu="asterix" data-el="zeus"><img src="img/accueil/zeus.jpg" width="630" height="360" alt="Gare de Tonnerre 2 Zeus vue de dessus"><h3>Tonnerre 2 Zeus</h3><p>Montagnes russes en bois, 1 100 m</p><small class="prog"></small></a>
+    <a class="tile card" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=hourra" data-type="parc" data-lieu="asterix" data-el="hourra"><img src="img/accueil/hourra.jpg" width="630" height="360" alt="Gare de la Trace du Hourra vue de dessus"><h3>La Trace du Hourra</h3><p>Bobsleigh, 780 m</p><small class="prog"></small></a>
+    <a class="tile card" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=oziris" data-type="parc" data-lieu="asterix" data-el="oziris"><img src="img/accueil/oziris.jpg" width="630" height="360" alt="Gare d'OzIris vue de dessus"><h3>OzIris</h3><p>Coaster inversé, 1 000 m</p><small class="prog"></small></a>
+    <a class="tile card" href="jeu.html?type=parc&amp;lieu=asterix&amp;el=goudurix" data-type="parc" data-lieu="asterix" data-el="goudurix"><img src="img/accueil/goudurix.jpg" width="630" height="360" alt="Gare de Goudurix vue de dessus"><h3>Goudurix</h3><p>Acier à rails tubulaires, 950 m</p><small class="prog"></small></a>
+  </div>
+</section>
+
+<script src="lieux/index.js"></script>
+<script>document.write('<script src="'+lieuDir(LIEUX[0].type,LIEUX[0].id)+'plan.data.js"><\/script>');</script><!-- fond : plan du premier lieu (un seul pour l'instant) -->
+<script>
+'use strict';
+/* ───────── fond animé : plan du parc en lent travelling, assombri ───────── */
+(function(){
+  const cv=document.getElementById('bg'),ctx=cv.getContext('2d');
+  const COL={ground:'#7b8561',lawn:'#8a9a66',forest:'#4d6340',water:'#5f7f8c',waterEdge:'#4a6874',bldFill:'#b3aa9d',bldEdge:'#7d766b',plaza:'#b9ae8e',path:'#cbbf9f',pathEdge:'#9b9078',road:'#8c8c88',roadEdge:'#6b6b68',track:'#4a4540',hl:'#f2c14e'};
+  const ring=f=>{const p=new Path2D();for(const r of f){if(r.l)continue;p.moveTo(r[0],r[1]);for(let i=2;i<r.length;i+=2)p.lineTo(r[i],r[i+1]);p.closePath();}return p;};
+  const line=a=>{const p=new Path2D();for(const r of a){p.moveTo(r[0],r[1]);for(let i=2;i<r.length;i+=2)p.lineTo(r[i],r[i+1]);}return p;};
+  const P={};for(const k of ['water','lawn','forest','bld'])P[k]=PARK[k].map(ring);P.plaza=(PARK.plaza||[]).map(ring);
+  P.canal=line(PARK.water.flatMap(f=>f.filter(r=>r.l).map(r=>r.l)));P.paths=line(PARK.paths);P.roads=line(PARK.roads);
+  const sim=new Set(PARK.attr.filter(a=>a.site).map(a=>a.name.toLowerCase()));
+  const TRK=PARK.tracks.map(t=>({p:line([t.pts]),hl:sim.has(t.name.toLowerCase())}));
+  const way=PARK.attr.filter(a=>a.site).map(a=>[a.x,a.z]);if(!way.length)way.push([230,260]);
+  let W=0,H=0,dpr=1;
+  function size(){dpr=Math.min(window.devicePixelRatio||1,1.25);W=innerWidth;H=innerHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+  const ease=t=>t*t*(3-2*t);
+  function frame(sec){
+    const SEG=26,i=Math.floor(sec/SEG),f=(sec%SEG)/SEG,a=way[i%way.length],b=way[(i+1)%way.length],k=ease(f);
+    const x=a[0]+(b[0]-a[0])*k+Math.sin(sec*.11)*6,z=a[1]+(b[1]-a[1])*k+Math.cos(sec*.09)*6;
+    const s=Math.max(1.5,Math.min(3.4,Math.min(W,H)/190))*(1+.06*Math.sin(sec*.07));
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=COL.ground;ctx.fillRect(0,0,W,H);
+    ctx.save();ctx.translate(W/2-x*s,H/2-z*s);ctx.scale(s,s);ctx.lineJoin='round';ctx.lineCap='round';
+    ctx.fillStyle=COL.plaza;for(const p of P.plaza)ctx.fill(p,'evenodd');
+    ctx.fillStyle=COL.lawn;for(const p of P.lawn)ctx.fill(p,'evenodd');
+    ctx.fillStyle=COL.forest;for(const p of P.forest)ctx.fill(p,'evenodd');
+    ctx.fillStyle=COL.water;ctx.strokeStyle=COL.waterEdge;ctx.lineWidth=1/s;for(const p of P.water){ctx.fill(p,'evenodd');ctx.stroke(p);}
+    ctx.strokeStyle=COL.water;ctx.lineWidth=Math.max(3,1.6/s);ctx.stroke(P.canal);
+    ctx.strokeStyle=COL.roadEdge;ctx.lineWidth=Math.max(6,2.6/s);ctx.stroke(P.roads);ctx.strokeStyle=COL.road;ctx.lineWidth=Math.max(4.6,1.8/s);ctx.stroke(P.roads);
+    ctx.strokeStyle=COL.pathEdge;ctx.lineWidth=Math.max(2.8,1.5/s);ctx.stroke(P.paths);ctx.strokeStyle=COL.path;ctx.lineWidth=Math.max(2,1/s);ctx.stroke(P.paths);
+    ctx.fillStyle=COL.bldFill;ctx.strokeStyle=COL.bldEdge;ctx.lineWidth=.8/s;for(const p of P.bld){ctx.fill(p);ctx.stroke(p);}
+    for(const t of TRK){ctx.strokeStyle=t.hl?COL.hl:COL.track;ctx.lineWidth=t.hl?Math.max(1.2,3/s):Math.max(.8,1.5/s);ctx.stroke(t.p);}
+    ctx.restore();
+  }
+  size();addEventListener('resize',()=>{size();frame(cur);});
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur=0,last=0,raf=0;
+  function loop(ts){raf=requestAnimationFrame(loop);if(ts-last<42)return;cur+=Math.min(.1,(ts-last)/1000);last=ts;frame(cur);}
+  frame(0);
+  if(!still){const go=()=>{cancelAnimationFrame(raf);if(!document.hidden){last=performance.now();raf=requestAnimationFrame(loop);}};document.addEventListener('visibilitychange',go);go();}
+})();
+
+/* ───────── menu : dernière partie, choix d'attraction et de mode ───────── */
+(function(){
+  const NAMES={};for(const l of LIEUX)for(const e of l.elements)NAMES[l.type+'.'+l.id+'.'+e.id]=e.nom;
+  const MODES={career:'Carrière',sandbox:'Bac à sable'};
+  const $=id=>document.getElementById(id);
+  const fmt=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(Math.floor(m)%60).padStart(2,'0');
+  let mode='career';try{if(localStorage.getItem('t2z.mode')==='sandbox')mode='sandbox';}catch(e){}
+  // dernière partie sauvegardée (horodatage ts de engine/save.js), tous sites et modes confondus
+  let last=null;
+  for(const s in NAMES)for(const m in MODES){try{const d=JSON.parse(localStorage.getItem('t2z.save.'+s+'.'+m)||'null');if(d&&d.time!=null&&(!last||(d.ts||0)>(last.ts||0)))last={s,m,time:d.time,ts:d.ts||0};}catch(e){}} // s = type.lieu.el
+  const lcd=$('lcd'),cont=$('rCont');
+  if(last){const t=NAMES[last.s]+' · '+MODES[last.m]+' · '+fmt(last.time);
+    cont.hidden=false;const [lt,ll,le]=last.s.split('.');cont.href='jeu.html?type='+lt+'&lieu='+ll+'&el='+le+'&mode='+last.m;cont.classList.add('lit');$('contInfo').textContent=NAMES[last.s];
+    lcd.textContent='Dernière partie : '+t;}
+  function paint(){
+    $('mCareer').setAttribute('aria-pressed',mode==='career');$('mSand').setAttribute('aria-pressed',mode==='sandbox');
+    $('mCareer').classList.toggle('lit',mode==='career');$('mSand').classList.toggle('lit',mode==='sandbox');
+    $('mCareer').classList.toggle('blue',mode==='career');$('mSand').classList.toggle('blue',mode==='sandbox');
+    $('modeTxt').textContent=mode==='sandbox'?'Bac à sable : sans budget, météo ni pannes':'Carrière : budget, météo et pannes';
+    for(const a of document.querySelectorAll('a.card[data-el]')){
+      const d0=a.dataset,s=d0.type+'.'+d0.lieu+'.'+d0.el;a.href='jeu.html?type='+d0.type+'&lieu='+d0.lieu+'&el='+d0.el+'&mode='+mode;const p=a.querySelector('.prog');p.textContent='';
+      try{const d=JSON.parse(localStorage.getItem('t2z.save.'+s+'.'+mode)||'null');if(d&&d.time!=null)p.textContent='Partie en cours \u2014 '+fmt(d.time);}catch(e){}
+    }
+  }
+  for(const [id,m] of [['mCareer','career'],['mSand','sandbox']])$(id).onclick=()=>{mode=m;try{localStorage.setItem('t2z.mode',m);}catch(e){}paint();};
+  paint();
+  /* Écran de choix à 3 niveaux : type -> lieu -> éléments. Un niveau à un seul choix est sauté (aujourd'hui : un type, un lieu, donc seuls les éléments s'affichent). */
+  let selT=TYPES.length===1?TYPES[0].id:'',selL='';
+  const lieuxDe=t=>LIEUX.filter(l=>l.type===t);
+  if(selT&&lieuxDe(selT).length===1)selL=lieuxDe(selT)[0].id;
+  function niveaux(){
+    const niv=$('niv'),els=$('els'),fin=!!(selT&&selL);niv.hidden=fin;els.hidden=!fin;niv.textContent='';
+    $('pickTitre').textContent=!selT?'Choisir un type':!selL?'Choisir un lieu':'Choisir une attraction';
+    if(!fin){for(const o of (!selT?TYPES.map(t=>({id:t.id,nom:t.nom,t:1})):lieuxDe(selT).map(l=>({id:l.id,nom:l.nom})))){
+      const b=document.createElement('a');b.className='tile card';b.href='#jouer';const h=document.createElement('h3');h.textContent=o.nom;b.appendChild(h);
+      b.onclick=e=>{e.preventDefault();if(o.t){selT=o.id;const ls=lieuxDe(selT);if(ls.length===1)selL=ls[0].id;}else selL=o.id;niveaux();};niv.appendChild(b);}}
+    for(const a of document.querySelectorAll('a.card[data-el]'))a.hidden=!(a.dataset.type===selT&&a.dataset.lieu===selL);
+    $('rPlan').href=selT&&selL?'plan.html?type='+selT+'&lieu='+selL:'plan.html';
+  }
+  niveaux();
+  // deux écrans, sans défilement : #jouer = choix de l'attraction
+  const home=$('home'),pick=$('pickScr');
+  function route(){const p=location.hash==='#jouer';home.classList.toggle('off',p);pick.classList.toggle('off',!p);
+    (p?$('back'):$('rPlay')).focus({preventScroll:true});}
+  addEventListener('hashchange',route);
+  $('back').onclick=e=>{e.preventDefault();if(location.hash==='#jouer'&&(selL&&lieuxDe(selT).length>1)){selL='';niveaux();return;}if(location.hash==='#jouer'&&selT&&TYPES.length>1&&!selL){selT='';niveaux();return;}if(history.length>1&&location.hash==='#jouer')history.back();else location.hash='';};
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&location.hash==='#jouer')$('back').click();});
+  home.classList.toggle('off',location.hash==='#jouer');pick.classList.toggle('off',location.hash!=='#jouer');
+})();
+</script>
+<script>
+/* Hors ligne : service worker, seulement en http(s) (rien sous file://) */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+</script>
+<script>
+/* Installation : ligne « Installer » (Android / Chrome, beforeinstallprompt) ou indication (iOS Safari). Rien en mode application ni sous file://. */
+(function(){
+  const b=document.getElementById('rInst'),lcd=document.getElementById('lcd');
+  const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  if(standalone||!/^https?:$/.test(location.protocol))return;
+  let ev=null;
+  addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;b.hidden=false;});
+  addEventListener('appinstalled',()=>{b.hidden=true;});
+  const ios=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(ios)b.hidden=false;
+  b.onclick=()=>{if(ev){ev.prompt();ev.userChoice.finally(()=>{ev=null;b.hidden=true;});}else lcd.textContent='Installer : Partager, puis Sur l\'écran d\'accueil.';};
+})();
+</script>
+</body>
+</html>

@@ -12,7 +12,7 @@ Session longue lancée par le propriétaire ; mémoire et reprise : `docs/PILOTA
 - Réalisme : rendu crédible, couleurs sourdes, aucun pictogramme ni emoji, rien d'enfantin.
 - OSM est la référence ; tout ce qui est estimé est signalé dans le code et dit au propriétaire.
 - Code lisible, KISS ; aucune dépendance, tout marche en ouvrant le fichier (`file://`), sans `fetch` ni modules ES.
-- Le moteur (`engine/`) est une **copie figée** d'une version d'`osmrides` : ne jamais la modifier ici ; un besoin = issue `inter-equipe` dans `qhess34/osmrides`.
+- Le moteur est **chargé par version** (`const MOTEUR` dans `jeu.html`, mode d'emploi : `docs/versions.md` d'`osmrides`) : jamais de moteur codé ici ; un besoin = issue `inter-equipe` dans `qhess34/osmrides`.
 - Git : branche `main`, commits directs, messages en anglais à l'impératif.
 
 ## Tests
@@ -24,3 +24,15 @@ Session longue lancée par le propriétaire ; mémoire et reprise : `docs/PILOTA
 - Lire : ce fichier, `docs/PILOTAGE.md`, les issues ouvertes. Le reste par l'`explorateur` (Haiku).
 - Un sous-agent par tâche, consigne autonome (réponses du propriétaire recopiées), rapport ≤ 8 lignes. Modèle : Haiku (recherche, tests), Sonnet (travail courant), Opus seulement sur demande du propriétaire.
 - Ne jamais lire en entier un fichier de données généré (`*.data.js`).
+
+## Fichiers
+
+| Fichier | Rôle |
+|---|---|
+| `jeu.html` | page de jeu (version du moteur : `MOTEUR`) |
+| `index.html`, `plan.html`, `tutos.html` | choix des attractions, plan du parc, tutoriels |
+| `lieux/` | `index.js` et `parc/asterix/` : données OSM, `SITE`, `*.game.js` |
+| `tools/` | tests (`check`, `save`, `mobile`), captures, génération des données |
+| `sw.js`, `manifest.webmanifest`, `icons/`, `img/`, `site.css` | hors ligne, installation, images, style |
+| `compose.yaml` | éditeur (Docker) |
+| `.github/workflows/` | publication GitHub Pages |
