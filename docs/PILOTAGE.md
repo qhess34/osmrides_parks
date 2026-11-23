@@ -22,4 +22,7 @@ _23/11/2026 après-midi, Chef parcs, session n° 1._
 - Tests 23/11 : `check.js` PASS sur zeus, hourra, oziris, goudurix (moteur chargé en ligne) ; `save.js`, `mobile.js` PASS. Non testés : éditeur Docker, hors ligne en https, `thumbs.js`/`captures.js`/`sound.js`.
 - Réseau de l'environnement cloud « Default » : `cdn.jsdelivr.net` autorisé (choix du propriétaire) ; les tests passent par le moteur en ligne.
 - `apropos.html` non copié (ira dans `osmrides_website`) : liens remplacés provisoirement par le dépôt `osmrides`.
-- Issues : #1 (déplacement, à valider), #2 (version 0.0.1, éditeur Docker à valider par le propriétaire).
+- #3 (Chef moteur) : docs de jeu reprises d'osmrides (NOUVELLE-ATTRACTION, notes, ref/site et tests, plans, sources, guides OSM, build.py, make_icons.js) ; fiches du moteur en liens vers osmrides. Tests avec un moteur local : `MOTEUR=../osmrides/engine/ node tools/check.js zeus` (clone voisin d'osmrides).
+- #4 (Webmestre) : lien « À propos » → https://qhess34.github.io/osmrides_website/apropos.html.
+- Le jeu couvre les parcs d'attractions en général (propriétaire) : Parc Astérix = premier lieu, d'autres suivront.
+- Issues : #1, #2 (éditeur Docker), #3, #4 à valider par le propriétaire.
