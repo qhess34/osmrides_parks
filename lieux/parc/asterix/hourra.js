@@ -36,7 +36,7 @@ const SITE=(()=>{
     maxRun:5,   // au plus 5 trains sur le parcours (propriétaire) : la sortie d'un 6e est refusée
     // Repères lus dans OSM (tools/specs/hourra.json) : lift, freins de bloc B1 (zone « waiting » de 11,7 m en haut du lift : frein de bloc après le lift, propriétaire
     // 2026-11-16 ; le lift retient le train tant que B1 est occupé), B2 et B3, frein final, rail de transfert du pont (arrêt au bout du rail : pas de holdBack), frein avant gare.
-    stopBack:.5,dropAfter:12,loadSide:-1,
+    stopBack:.5,dropAfter:12,
     phys:{roll:.13,drag:.0016,vmin:3},
     // Garage sur le frein final : pont transbordeur DROIT (propriétaire) — deux éléments mobiles indépendants, droits, d'un train de long :
     // rail mobile du parcours (rail A) = rail du circuit (zone de freinage), deux positions seulement : sur le circuit ou retiré vers l'est (retract) ;

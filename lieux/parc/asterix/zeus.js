@@ -14,7 +14,7 @@ const SITE=(()=>{
     id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,lap:150,
     car:{len:1.5,n:14},                    // 14 wagons de 2 places côte à côte ; longueur de wagon estimée
     trains:[{name:'Train 1 « Éclair »',col:'#1c8a94',col2:'#f2c14e',wear:30},{name:'Train 2 « Foudre »',col:'#17727c',col2:'#d9dde2',wear:48}],
-    stopBack:3,holdBack:4,dropAfter:14,loadSide:1,
+    stopBack:3,holdBack:4,dropAfter:14,
     phys:{roll:.098,drag:.0006,vmin:3},
     // Garage dans le prolongement de la gare (SITE.yard, voir docs/manoeuvres.md) : aiguillage = tronçon en S coulissant, une voie où les trains se rangent en file.
     // Voie de garage = voie de maintenance réelle (OSM) ; position et course du chariot (a, b, slide) déduites de la carte ; vitesse de manœuvre et durée de déplacement estimées.

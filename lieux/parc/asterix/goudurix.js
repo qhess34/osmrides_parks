@@ -34,7 +34,7 @@ const SITE=(()=>{
     // Deux zones de freinage (propriétaire) : frein de bloc B1 (repère blk1) juste avant la portion droite sous le lift, frein final (brk) sur la voie parallèle à la gare. Position d'après le propriétaire, emplacement exact ESTIMÉ.
     // Repères lus dans OSM (2026-11-16) : lift 541092982, B1 = zone « waiting » 1580112200, frein final = zone « waiting » 1580112203 (voie parallèle à la gare, propriétaire).
     // holdBack 34 : le train s'arrête au bout du frein final OSM (qui finit 31 m avant la gare), 0,6 m avant le tronçon mobile de l'aiguillage (ESTIMÉ à ± 1 m).
-    stopBack:.5,holdBack:34,dropAfter:35,loadSide:1,   // le train roule vers le sud : loadSide 1 = embarquement à l'OUEST (portillons à l'ouest, propriétaire ; entrée OSM à l'ouest)
+    stopBack:.5,holdBack:34,dropAfter:35,   // le train roule vers le sud ; côté d'embarquement déduit par le moteur (0.3.0+) : embarquement à l'OUEST (portillons à l'ouest, propriétaire ; entrée OSM à l'ouest)
     phys:{roll:.02,drag:.0004,vmin:3},
     // Garage : une seule voie (la voie de maintenance OSM), 2 trains au plus. Durée de rotation (4 s) et vitesse de manœuvre ESTIMÉES.
     yard:{at:'station',device:'switch',back:true,rotary:true,s:true,a:45.4,b:51.6,slide:1,side:-1,len:5.6,devName:'Aiguillage',devLabel:'l\'aiguillage',lanes:[{name:'Garage',pts:lanePts,cap:2}],move:{v:2.4,t:4}},

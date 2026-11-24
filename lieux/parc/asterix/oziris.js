@@ -26,7 +26,7 @@ const SITE=(()=>{
     // Repères lus dans OSM (tools/specs/oziris.json, mise à jour du propriétaire 2026-11-16) : frein final 1580105919, rail du pont 541161847 (tr0/tr1 : le train s'arrête au bout
     // du rail, pas de holdBack), zone d'attente avant gare 1330192627 (pre). OSM n'a AUCUN frein de bloc en parcours : l'ancien B1 (estimé) est retiré.
     // Embarquement à l'OUEST : entrée OSM entrance=main (-12,6 ; -9,0) à l'ouest de la voie, sortie entrance=exit (-7,5 ; -9,5) à l'est (réponse à la question 24 par OSM).
-    stopBack:.5,dropAfter:50,loadSide:1,
+    stopBack:.5,dropAfter:50,
     phys:{roll:.06,drag:.0011,vmin:3},
     // Pont transbordeur à rail unique (single) : zone RB « Rail du pont » = zone de freinage du circuit (AUTO) en P, zone porteuse face à une voie.
     // ESTIMÉS : longueur du rail (un train + 0,6 m de chaque côté, pre/post ; OSM : pont ≈ 14 m), jeu rail/voies (laneGap 0,8 m),
