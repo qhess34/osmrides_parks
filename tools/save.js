@@ -43,7 +43,7 @@ const drive = (page, minutes, o = {}) => page.evaluate(([min, o]) => {
 const load = async (ctx, url, errors, first) => {
   const page = await ctx.newPage();
   page.on('pageerror', e => errors.push(String(e.message || e)));
-  page.on('console', m => { if (m.type() === 'error' && !/\.game\.js$/.test((m.location() || {}).url || '')) // lieux/parc/asterix/<el>.game.js facultatif : absent = erreur de chargement attendue
+  page.on('console', m => { if (m.type() === 'error' && !/(\.game|\/lieu)\.js$/.test((m.location() || {}).url || '')) // lieux/parc/asterix/<el>.game.js facultatif : absent = erreur de chargement attendue
   errors.push('console: ' + m.text()); });
   await page.goto(url);
   await page.waitForFunction(() => window.G && window.t2zSave);

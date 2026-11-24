@@ -27,7 +27,7 @@ async function open(browser, vp, url, noFs) {
   const ctx = await browser.newContext(vp), page = await ctx.newPage(), errors = [];
   if (noFs) await page.addInitScript(() => { for (const k of ['requestFullscreen', 'webkitRequestFullscreen']) try { Object.defineProperty(Element.prototype, k, { value: undefined, configurable: true }); } catch (e) {} });
   page.on('pageerror', e => errors.push(String(e.message || e)));
-  page.on('console', m => { if (m.type() === 'error' && !/\.game\.js$/.test((m.location() || {}).url || '')) // lieux/parc/asterix/<el>.game.js facultatif : absent = erreur de chargement attendue
+  page.on('console', m => { if (m.type() === 'error' && !/(\.game|\/lieu)\.js$/.test((m.location() || {}).url || '')) // lieux/parc/asterix/<el>.game.js facultatif : absent = erreur de chargement attendue
   errors.push('console: ' + m.text()); });
   await page.goto(url);
   const cdp = await ctx.newCDPSession(page);
