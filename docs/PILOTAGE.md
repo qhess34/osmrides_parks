@@ -32,5 +32,6 @@ _23/11/2026 après-midi, Chef parcs, session n° 1._
 - Arbitrages de la création « OSM + éditeur seulement » : #5 (tranchés) ; feuille de route #6 ; demande moteur qhess34/osmrides#54. Relations OSM `type=site` posées par le propriétaire : Zeus 6267961, Goudurix 22231193, OzIris 22231216, Hourra 22231220.
 - 24/11 : moteur 0.5.0 adopté (contient 0.3.0, 0.4.0 ; #7) : `lieu.js` (horaires par parc, ESTIMÉS), filtre des tests `/(\.game|\/lieu)\.js$/`, `loadSide` retiré de SITE (déduit). `dropAfter` / `holdBack` gardés (propriétaire : serviront à fixer `ele` / `GAME.profile`). Salles de contrôle : à poser par le propriétaire dans l'éditeur, puis retirer `booth`, `boothLabel`, `beacon`.
 - 24/11 : moteur 0.6.0 adopté (#8 : ponts transbordeurs réglables dans l'éditeur ; `yard.post`, `laneGap`, `retract.d`, `d` des voies à retirer de `SITE` après saisie par le propriétaire). Retouches de l'éditeur demandées : qhess34/osmrides#57 ; parc entier : qhess34/osmrides#56.
+- 26/11 : publication Pages en échec du 24 au 26/11 (deploy-pages ne trouvait plus l'artefact dans le même job) → workflow en deux jobs build / deploy, actions à jour : OK. Bugs de jeu et audit du pupitre transmis : qhess34/osmrides#58.
 - Session du Chef moteur (24/11) : session_01UxooiSZ8h5uvMWwB1rESda ; canal principal = issues `inter-equipe`.
 - Issues ouvertes : #5, #6.
