@@ -18,6 +18,10 @@ Session longue lancée par le propriétaire ; mémoire et reprise : `docs/PILOTA
 ## Tests
 
 `tools/check.js <el>` sur chaque attraction (une après l'autre), `tools/save.js`, `tools/mobile.js` ; relever les erreurs de page.
+Adoption d'une version du moteur (issue #12, propriétaire 26/11 ; pas de batterie en double, la note de version d'osmrides fait foi) :
+- sans changement de `SITE`, de `game.js` ni de données OSM : un seul `check.js` sur une attraction, moteur chargé par version (`const MOTEUR` de `jeu.html`) ;
+- avec changement : batterie complète (`check`, `save`, `mobile`) sur les attractions touchées seulement ;
+- tout échec ou pageerror vu à l'adoption : issue `inter-equipe` chez `qhess34/osmrides` (test et message joints).
 Moteur local : `MOTEUR=../osmrides/engine/ NODE_PATH=$(npm root -g) node tools/check.js <el>` (variable lue par `check`, `save`, `mobile`, `sound`, `captures`, `thumbs`, `yard-zone` : ajoute `&moteur=…` à l'URL) ; sans variable, moteur chargé par version. Captures seulement pour un point visuel (une petite, ≈ 600×450, JPEG ≈ 70, regardée une fois).
 
 ## Économie de tokens
