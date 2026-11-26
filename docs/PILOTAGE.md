@@ -35,5 +35,6 @@ _23/11/2026 après-midi, Chef parcs, session n° 1._
 - 26/11 : publication Pages en échec du 24 au 26/11 (deploy-pages ne trouvait plus l'artefact dans le même job) → workflow en deux jobs build / deploy, actions à jour : OK. Bugs de jeu et audit du pupitre transmis : qhess34/osmrides#58.
 - 26/11 : moteur 0.7.2 adopté (#9, #10 : durée de tour mesurée, textes génériques, éclairs non réglables, reprise de partie, barrière de fourche, fin d'orage). Retirés de SITE : `lap`, `strike`, `text`. `dropAfter` gardé jusqu'à la saisie du profil des hauteurs.
 - 26/11 : moteur 0.7.3 adopté (#11 : évacués arrêtés sur tout le vantail). Règle de tests à l'adoption (#12) dans `AGENTS.md`.
+- 26/11 : moteur 0.7.4 adopté (#13 : « Départ » envoie un train vide au garage sur Zeus) ; `check.js` zeus adapté (`dep: refuseFullOrRiders`, voie de garage de Zeus pleine au départ).
 - Session du Chef moteur (24/11) : session_01UxooiSZ8h5uvMWwB1rESda ; canal principal = issues `inter-equipe`.
 - Issues ouvertes : #5, #6.

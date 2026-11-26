@@ -348,7 +348,9 @@ const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur
       const off = D.ra ? '#yA1' : '#y1', on = D.ra ? '#yA0' : '#yP', T = `trains[${D.k}]`;
       await p5.click(off); dk('devOff', await u5(D.ra ? 'raOut()' : 'devOn(0)', 800));
       await p5.click('#bGo');
-      if (D.at === 'St') { /* la gare est la dernière zone d'attente avant l'appareil (HOLD_Z) : départ refusé */ await u5('false', 400); dk('refuseNoBrake', await log5('ne peut pas partir : .* hors de P, aucune zone de freinage') && await p5.evaluate(T => eval(T).st === 'station', T)); }
+      if (D.at === 'St') { /* moteur 0.7.4 (osmrides#62) : « Départ » vers le garage = train vide envoyé au garage ; refus si passagers (« il n'entre jamais au garage ») ou voie pleine (Zeus au départ : 1 train déjà garé) ; parcours complet testé côté osmrides (bugs62-test.js) */
+        const g = await u5(`${T}.st==='garage'||${T}.s<S_ST-1`, 12000), r = await log5("n.entre jamais au garage|pleine");
+        dk(g ? 'departGarage' : 'refuseFullOrRiders', g || (r && await p5.evaluate(T => eval(T).st === 'station', T))); }
       else {
         dk('departOk', await u5(`${T}.st==='run'&&${T}.s>S_ST+TLEN`, 4000));
         const hs = D.trav ? 'S_PRE' : 'HOLD_S'; /* retenu avant le chariot (pont droit) ou à la dernière zone d'attente avant l'appareil */
