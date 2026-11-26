@@ -22,7 +22,7 @@ const SITE=(()=>{
   const lane=(n,P)=>({name:'Voie '+n,d:r1(dOf([P[0],P[P.length-1]])),len:r1(Math.hypot(P[P.length-1][0]-P[0][0],P[P.length-1][1]-P[0][1])),cap:1});
   const GAP=r1(dOf([OSM.paths.garB[0],OSM.paths.garB[OSM.paths.garB.length-1]])),LGAP=Math.max(.3,r1(Math.min(...LN.map(P=>Math.min(tOf(P[0]),tOf(P[P.length-1]))))-AL));
   return {
-    id:'hourra',title:'La Trace du Hourra',kind:'bob',trackName:'Gouttière',goal:900,lap:110,
+    id:'hourra',title:'La Trace du Hourra',kind:'bob',trackName:'Gouttière',goal:900,
     // 7 bobs de 2 places l'une derrière l'autre (propriétaire) ; longueur et largeur d'un bob estimées. pitch : 0,56 m d'axe à axe, passagers l'un contre l'autre (propriétaire, 2026-11-17 : pas d'espace entre eux)
     // (propriétaire : « collés l'un contre l'autre ») ; tient dans 1,55 m avec la lapbar devant le passager avant, sans allonger le bob.
     car:{len:1.55,n:7,seats:2,inline:true,w:.95,pitch:.56},
@@ -78,7 +78,6 @@ const SITE=(()=>{
       frein:{label:'Frein final',x:-26,z:-30,s:12},garage:{label:'Garage',x:-31,z:-18,s:11},
       rocher:{label:'Rocher',x:42,z:25,s:10},passerelle:{label:'Passerelle',x:35.5,z:-4.4,s:12}},
     labels:()=>[['Gare',-6,-8],['Lift — 31 m',44,-50],['Frein final',-36,-42],['Garage',-31,-4],['Pont transbordeur',-38,-33],["File d'attente",40,8],['Rocher',45,35],['Entrée',67,23]],
-    text:{storm:'Orage sur l\'attraction : aucun train ne doit partir.',great:'Excellente exploitation sur la Trace du Hourra !'},
     // Commande par zones : freins de bloc B1…B3 = freins + roues de propulsion en marche avant seule (drive:'fwd', bouton AV sans AR, propriétaire 2026-11-17) ;
     // frein final, rail mobile du parcours, rail du chariot, voies = freins + moteurs (défauts du moteur, disposition ESTIMÉE). Exemple pour changer : zones:{B:{drive:false}, RA:{drive:false}}.
     helpGarage:'<b>Garage</b> : six voies droites, un train par voie, desservies par un pont transbordeur droit sur le frein final, commandées par zones. Deux éléments mobiles : '

@@ -24,7 +24,7 @@ const SITE=(()=>{
   // Voie de garage : S OSM 1580112201 (du nœud railway=switch vers le sud) puis voie de maintenance 1221386549 ; le tronçon mobile en S va du nœud switch au 3e point du S (≈ 6 m).
   const lanePts=OSM.paths.gS.slice().reverse().slice(2).concat(OSM.paths.garage.slice().reverse().slice(1)),BRIDGE=OSM.paths.bridge.slice(0,3).reverse(); // pont de bois OSM 161214279 (layer 1) ; son 4e point = début du chemin de liaison QL
   return {
-    id:'goudurix',title:'Goudurix',kind:'steel',trackName:'Voie tubulaire',goal:500,lap:120,
+    id:'goudurix',title:'Goudurix',kind:'steel',trackName:'Voie tubulaire',goal:500,
     // 2 trains de 7 wagons, 28 places = 4 par wagon en 2 rangées de 2 (RCDB, Wikipédia). Longueur (2,55 m) et largeur (1,5 m) d'un wagon ESTIMÉES.
     car:{len:2.55,n:7,seats:4,abreast:2,w:1.5},
     // Trains rouges (propriétaire, 2026-11-15) ; teinte exacte et liseré gris sombre SUPPOSÉS ; voie tubulaire jaune et supports rouges d'après la photo du propriétaire (teintes assourdies).
@@ -74,10 +74,8 @@ const SITE=(()=>{
       frein:{label:'Frein final',x:-6,z:30,s:8},garage:{label:'Garage',x:-14,z:10,s:11}},
     labels:()=>[['Gare',6,-4],['Lift — 36 m',12,78],['Grande descente',38,100],['Virage à 180°',14,128],['Butterfly',27,70],['Loop',66,62],['Batwing',60,22],['Double Corkscrew',3,92],
       ['Poste aiguillage',-12.5,-7.4],['Frein final',-32,35],['Garage',-32,12],['Entrée',27,22],["File d'attente",-14,36],['Sortie',9,15]],
-    strike:{area:[-60,100,-40,150]},
     // Le premier frein du parcours (B1) RALENTIT nettement le train (propriétaire) : vitesse ramenée à 8 m/s (≈ 29 km/h, ESTIMÉ) en passage normal ; arrêt seulement si le canton suivant est occupé.
     zones:{B1:{trim:{v:8}}},
-    text:{storm:'Orage sur Goudurix : aucun train ne doit partir.',great:'Excellente exploitation sur Goudurix !'},
     helpGarage:'<b>Garage</b> : une voie de maintenance, en amont de la gare (≈ 45 m avant l\'arrêt du train). L\'aiguillage est un rail rotatif : il tourne sur lui-même autour du tube de rail, pour présenter le circuit (P) ou la voie (1). '
       +'Pour garer un train : train vide à quai, portillons fermés, aiguillage sur 1 (attendre la fin de la rotation), puis Dispatch de la voie : le train recule de la gare jusqu\'au fond de la voie (il s\'arrête avant le butoir). Remettez l\'aiguillage sur P. '
       +'Pour le sortir : gare libre (au besoin, frein final en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il avance jusqu\'en gare ; aiguillage sur P. '

@@ -33,5 +33,6 @@ _23/11/2026 après-midi, Chef parcs, session n° 1._
 - 24/11 : moteur 0.5.0 adopté (contient 0.3.0, 0.4.0 ; #7) : `lieu.js` (horaires par parc, ESTIMÉS), filtre des tests `/(\.game|\/lieu)\.js$/`, `loadSide` retiré de SITE (déduit). `dropAfter` / `holdBack` gardés (propriétaire : serviront à fixer `ele` / `GAME.profile`). Salles de contrôle : à poser par le propriétaire dans l'éditeur, puis retirer `booth`, `boothLabel`, `beacon`.
 - 24/11 : moteur 0.6.0 adopté (#8 : ponts transbordeurs réglables dans l'éditeur ; `yard.post`, `laneGap`, `retract.d`, `d` des voies à retirer de `SITE` après saisie par le propriétaire). Retouches de l'éditeur demandées : qhess34/osmrides#57 ; parc entier : qhess34/osmrides#56.
 - 26/11 : publication Pages en échec du 24 au 26/11 (deploy-pages ne trouvait plus l'artefact dans le même job) → workflow en deux jobs build / deploy, actions à jour : OK. Bugs de jeu et audit du pupitre transmis : qhess34/osmrides#58.
+- 26/11 : moteur 0.7.2 adopté (#9, #10 : durée de tour mesurée, textes génériques, éclairs non réglables, reprise de partie, barrière de fourche, fin d'orage). Retirés de SITE : `lap`, `strike`, `text`. `dropAfter` gardé jusqu'à la saisie du profil des hauteurs.
 - Session du Chef moteur (24/11) : session_01UxooiSZ8h5uvMWwB1rESda ; canal principal = issues `inter-equipe`.
 - Issues ouvertes : #5, #6.

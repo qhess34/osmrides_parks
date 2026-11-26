@@ -11,7 +11,7 @@ const SITE=(()=>{
   const PROM=OSM.paths.prom,KW=PROM.findIndex(p=>Math.hypot(p[0]+30.1,p[1]+9.3)<1),PROM_W=PROM.slice(0,KW+1),PROM_N=PROM.slice(KW+1).reverse();
   const GM_=OSM.paths.garage,onGarage=x=>[x,GM_[0][1]+(x-GM_[0][0])*(GM_[GM_.length-1][1]-GM_[0][1])/(GM_[GM_.length-1][0]-GM_[0][0])]; // voie de maintenance réelle (OSM 938337765 + 938337766)
   return {
-    id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,lap:150,
+    id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,
     car:{len:1.5,n:14},                    // 14 wagons de 2 places côte à côte ; longueur de wagon estimée
     trains:[{name:'Train 1 « Éclair »',col:'#1c8a94',col2:'#f2c14e',wear:30},{name:'Train 2 « Foudre »',col:'#17727c',col2:'#d9dde2',wear:48}],
     stopBack:3,holdBack:4,dropAfter:14,
@@ -50,8 +50,7 @@ const SITE=(()=>{
     view:{x:38,z:52,w:222,h:162,bounds:[-170,210,-130,230]},
     cams:{gare:{label:'Gare',x:5,z:2,s:19},file:{label:'File',x:-20,z:19,s:14},lift:{label:'Lift',x:35,z:40,s:8.5},descente:{label:'Descente',x:8,z:98,s:9},tunnel2:{label:'Tunnel à effets',x:66,z:56,s:7},croisement:{label:'Croisement',x:52,z:70,s:9},zeus:{label:'Zeus',x:-29,z:-1,s:19}},
     labels:o=>[['Gare',-4,-6.5],['Lift — 30 m',43,36],['Tunnel',o.tunnel[0]-2,o.tunnel[1]+8],['Tunnel à effets',72,52],['Freins',-33,30],["File d'attente",-34,20],['Zeus',-37,-5],['Entrée',-23.6,-3.6],['Garage',49,-12.5],['Aiguillage',17,-9.5]],
-    hideNames:['Zeus'],strike:{spot:[-31,-1],area:[-60,140,-20,125]},
-    text:{storm:'Zeus est en colère : orage sur l\'attraction ! Aucun train ne doit partir.',great:'Excellente exploitation, Zeus est fier de vous !'},
+    hideNames:['Zeus'],
     // Moteurs (pneus) par zone : gare, frein final, voie de garage = freins + moteurs (défaut du moteur, ESTIMÉ, à confirmer par le propriétaire) ; SITE.zones pour changer.
     helpGarage:'<b>Garage</b> : manœuvre manuelle, commandée par zones au pupitre. Pour garer un train : train vide à quai, portillons fermés, aiguillage sur 1 (attendre qu\'il soit en place), puis Dispatch de la voie : le train avance jusqu\'au fond du garage et s\'arrête avant le butoir. Remettez l\'aiguillage sur P. Pour le sortir : gare libre (au besoin, frein final en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il recule jusqu\'en gare ; aiguillage sur P. Dispatch choisit seul le sens (entrée si un train vide attend à quai et que la voie a de la place, sinon sortie) ; il refuse, avec la raison au journal, si l\'aiguillage n\'est pas sur la voie. L\'aiguillage ne bouge pas si un train est dessus ou tout près, et un train avec passagers ne quitte jamais le circuit.',
     draw:{

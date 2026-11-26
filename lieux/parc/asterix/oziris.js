@@ -15,7 +15,7 @@ const SITE=(()=>{
   // 1…3 = face à la voie k (circuit interrompu, trains retenus avant le pont). Pas de rail de garage distinct, pas de position G.
   const lane=(n,d)=>({name:'Voie '+n,d,len:13.3,cap:1});
   return {
-    id:'oziris',title:'OzIris',kind:'inverted',trackName:'Poutre caisson',goal:900,lap:140,
+    id:'oziris',title:'OzIris',kind:'inverted',trackName:'Poutre caisson',goal:900,
     // 3 trains de 8 wagons, 4 places côte à côte par wagon (Wikipedia, d'après RCDB) ; longueur (1,55 m) et largeur (2,6 m) d'un wagon ESTIMÉES.
     car:{len:1.55,n:8,seats:4,abreast:4,w:2.6},
     // 3 trains, tous BLEUS (propriétaire, 2026-11-15 ; l'article sur un 4e train est dépassé). Bleu sourd d'après les photos (voie et poutre bleues) ;
@@ -75,8 +75,6 @@ const SITE=(()=>{
       ["File d'attente",-30,57],['Entrée',38,36],['Tunnel sous l\'eau',28,3],['Galerie couverte',36,49],['Boutique',6,-12],
       // Inversions : plan des figures fourni par le propriétaire (affiche, stylisée) rapproché du tracé OSM par la forme ; emplacements ± 10 m, hauteurs ESTIMÉES.
       ['Dive loop',-8,92],['Looping vertical',36,22],['Immelmann',66,57],['Roulis zéro-G',2,-70],['Roulis zéro-G',8,63]],
-    strike:{area:[-90,90,-90,90]},
-    text:{storm:'Orage sur l\'attraction : aucun train ne doit partir.',great:'Excellente exploitation sur OzIris !'},
     // Commande par zones : frein final, rail du pont, attente avant gare, voies = freins + moteurs (défauts du moteur, ESTIMÉ, à confirmer).
     helpGarage:'<b>Garage</b> : trois voies de maintenance parallèles au frein final, en amont du pont transbordeur, un train par voie. '
       +'Le pont porte un seul rail, le rail du pont : c\'est la fin du frein final, qui vient chercher les trains au garage. En P il est en ligne avec le circuit ; '
