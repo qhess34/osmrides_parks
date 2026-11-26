@@ -250,6 +250,13 @@ const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur
       A.st = 'run'; A.s = BLK.length ? BLK[0] - 3 : S_HOLD; A.v = 0; A.blk = true; A.hold = 0; G.zm.Fin = true; G.zk.Fin = true; if (BLK.length) { G.zm.B1 = true; G.zk.B1 = true; } if (PSB) { G.zm.Pre = true; G.zk.Pre = true; } if (TRAV) { G.zm[ZR] = true; G.zk[ZR] = true; } // A ne doit pas quitter la zone (frein avant gare, rail du pont)
       run(() => B.wait && B.v === 0, 6000); o.push(B.wait && B.s > S_LIFT1 - 6 && B.s < S_REL ? 'topHold' : 'topHold:FAIL'); return o.join(' '); });
     man += ' | lift: ' + lf;
+    { // lift 0.10.0 : en AUTO, #zLift_t est inactif ; #zLift_m passe en MANU et l'active
+      await p2.evaluate(() => { G.liftOff = false; G.liftM = false; }); // G.liftOff posé directement bascule en MANU (ancienne sauvegarde) : on revient en AUTO
+      const rd = () => p2.evaluate(() => { ui(); return [document.getElementById('zLift_t').disabled, !!G.liftM]; });
+      const r0 = await rd(); await p2.click('#zLift_m'); const r1 = await rd();
+      const la = r0[0] && !r0[1] && !r1[0] && r1[1] ? 'liftAuto' : 'liftAuto:FAIL(' + r0 + ' ' + r1 + ')';
+      man += ' ' + la;
+    }
     await p2.close(); const p3 = await browser.newPage({ viewport: { width: 1280, height: 800 } });
     await p3.goto(url); await p3.waitForFunction(() => typeof act === 'function' && (act('help'), true)); await p3.click('[data-act=closeHelp]');
     const tr = await p3.evaluate(() => { const i = BTRIM.findIndex(v => v > 0); if (i < 0) return ''; act('speed', 0); G.wx.next = 1e6; const A = trains[0]; A.st = 'run'; A.s = Math.max(S_REL, BLK[i] - 120); A.v = 14; A.inLift = true; A.seats.fill(null); A.blk = false;

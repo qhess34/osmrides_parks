@@ -6,4 +6,4 @@ Jeu de fan non officiel, données © contributeurs OpenStreetMap (ODbL).
 
 ## Éditeur
 
-`docker compose up -d` puis http://127.0.0.1:8787/ (version de l'éditeur = `MOTEUR` de `jeu.html`). Sans Docker : `sh ../osmrides/tools/editeur.sh 0.9.0`.
+`docker compose up -d` puis http://127.0.0.1:8787/ (version de l'éditeur = `MOTEUR` de `jeu.html`). Sans Docker : `sh ../osmrides/tools/editeur.sh 0.10.0`.
