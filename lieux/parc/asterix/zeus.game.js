@@ -115,6 +115,7 @@ const GAME = {
     "plat": {
       "tex": "asphalt"
     },
+    "rail": "wood",
     "gate": "#2570e9"
   }
 };
