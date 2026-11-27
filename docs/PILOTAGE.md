@@ -1,45 +1,41 @@
-# Pilotage — osmrides_parks (Chef parcs, modèle Sonnet)
+# Pilotage — osmrides_parks
 
-## Démarrage d'une session
+**Depuis le 27/11/2026 (décision du propriétaire), ce dépôt est piloté par le Chef moteur** (session de `qhess34/osmrides`), qui adopte lui-même chaque version du moteur ici. Il n'y a plus de session Chef parcs ni d'issue de passage entre moteur et parcs. Le Chef stations (`osmrides_skiresort`) reste séparé : second utilisateur du moteur, il garantit sa généricité.
 
-Consigne à donner à la session : « Tu es le Chef parcs d'OSMrides pour le dépôt osmrides_parks. Lis `AGENTS.md`, `docs/PILOTAGE.md` (dont « État courant ») et les issues ouvertes du dépôt, dont celles étiquetées `inter-equipe`. Reprends le travail, présente-toi en 3 lignes au propriétaire, puis attends ses demandes en français. »
+## Règles de la fusion
 
-## Communication avec les autres chefs
-
-- Besoin d'un autre dépôt : ouvrir une issue **dans ce dépôt-là**, étiquette `inter-equipe` (besoin, critère de fin, lien vers l'issue d'origine).
-- Nouvelle fonctionnalité publiée : issue `inter-equipe` dans `qhess34/osmrides_website` (titre, 3 lignes, lien, une capture si visuelle).
-- Message de session seulement pour signaler qu'une issue attend (une ligne avec son numéro).
-
-## Renouvellement
-
-Après 3 ou 4 demandes ou une grande étape : mettre à jour « État courant », commiter, et demander au propriétaire d'ouvrir une nouvelle session avec la consigne de démarrage.
+- Deux dépôts séparés. Le propriétaire pose les étiquettes de version ; `jeu.html` (`const MOTEUR`) ne pointe que sur une étiquette posée.
+- Généricité : aucun nom d'attraction ni de parc dans le noyau du moteur. Ce qui est propre aux montagnes russes reste dans `engine/montagnes-russes/`, appelé à venir ici (qhess34/osmrides#51). Chaque note de version dit ce qui est générique et ce qui est propre aux parcs.
+- Adoption d'une version : dans la même série de travail que la version, mêmes règles de test (`AGENTS.md`, section Tests, issue #12) ; plus de copie adaptée de `check.js` côté moteur, on modifie directement celui de ce dépôt.
+- `SITE` garde la valeur d'origine lue par l'éditeur (« Origine ») ; `GAME` (`*.game.js`) n'est écrit que par l'éditeur ou par le propriétaire.
+- Réimport OSM : `*.data.js` toujours régénéré en entier par `tools/make_site.py` (extrait du parc : bbox `2.560,49.127,2.582,49.142`), jamais édité à la main ; données qui cassent un test → branche à part, pas `main`.
 
 ## État courant
 
-_23/11/2026 après-midi, Chef parcs, session n° 1._
+_27/11/2026, dernière note du Chef parcs avant la fusion._
 
-- Parc Astérix déplacé depuis `osmrides` (commit 11d4e28) : `lieux/parc/asterix/` (game.js du propriétaire identiques), `jeu.html`, `index.html`, `plan.html`, `tutos.html`, images, tests, skills, workflow Pages. Moteur chargé par version : `const MOTEUR='0.0.1';` dans `jeu.html` (jsDelivr) ; éditeur par `compose.yaml` (`docker compose up -d`, http://127.0.0.1:8787/).
-- Tests 23/11 : `check.js` PASS sur zeus, hourra, oziris, goudurix (moteur chargé en ligne) ; `save.js`, `mobile.js` PASS. Non testés : éditeur Docker, hors ligne en https, `thumbs.js`/`captures.js`/`sound.js`.
-- Réseau de l'environnement cloud « Default » : `cdn.jsdelivr.net` autorisé (choix du propriétaire) ; les tests passent par le moteur en ligne.
-- `apropos.html` non copié (ira dans `osmrides_website`) : liens remplacés provisoirement par le dépôt `osmrides`.
-- #3 (Chef moteur) : docs de jeu reprises d'osmrides (NOUVELLE-ATTRACTION, notes, ref/site et tests, plans, sources, guides OSM, build.py, make_icons.js) ; fiches du moteur en liens vers osmrides. Tests avec un moteur local : `MOTEUR=../osmrides/engine/ node tools/check.js zeus` (clone voisin d'osmrides).
-- #4 (Webmestre) : lien « À propos » → https://qhess34.github.io/osmrides_website/apropos.html.
-- Le jeu couvre les parcs d'attractions en général (propriétaire) : Parc Astérix = premier lieu, d'autres suivront.
-- Audit `docs/reste-osm-editeur.md` (23/11). Décisions du propriétaire : couleurs de voie dans GAME seulement (pas OSM) ; `surface` des files éditeur + OSM ; hauteurs dans l'éditeur, envoi OSM facultatif ; salles de contrôle dans l'éditeur seulement ; ponts transbordeurs réglés dans l'éditeur (voie mobile, positions, aimantation) ; `holdBack`, `dropAfter`, `loadSide` à déduire automatiquement ; freins réglables par zone ; objectifs et durées de tour estimés par défaut, remplaçables ; horaires par parc ; Hourra 5 trains max. Demande au moteur : qhess34/osmrides#53 (après 0.1.0 ; 0.1.1 = exploitation + salles de contrôle).
-- Fait 23/11 : chemins recopiés lus dans OSM (promenade Zeus, pont Goudurix, promenade OzIris) ; (déplacement de `kind`, `car`, `trains`, `track`, `trough`, `phys` vers `GAME.site` ANNULÉ : l'éditeur 0.0.1 lit ces valeurs d'origine dans `SITE` et plantait — sections vides ; règle : `SITE` garde la valeur d'origine, `GAME.site` n'est écrit que par une modification dans l'éditeur) ; Zeus réimporté en entier (2 tunnels OSM, le 2e = 28 m au lieu de 50 estimés) ; quais Goudurix limités au toit OSM 148159470 (3,9 / 3 m).
-- À voir : OzIris non réimporté — le nouvel import perdait la zone piétonne relation 8427077, qui existe toujours dans OSM (sans doute membres coupés par la bbox de l'extrait) ; `exit.path` de Zeus et `tails` du Hourra encore en partie à la main.
-- 24/11 : jeu passé au moteur 0.2.0 (étiquette posée par le propriétaire) ; check.js PASS ×4, save, mobile PASS. Ne pas copier `engine/montagnes-russes/` avant les réglages de qhess34/osmrides#53 (consigne du Chef moteur).
-- Arbitrages de la création « OSM + éditeur seulement » : #5 (tranchés) ; feuille de route #6 ; demande moteur qhess34/osmrides#54. Relations OSM `type=site` posées par le propriétaire : Zeus 6267961, Goudurix 22231193, OzIris 22231216, Hourra 22231220.
-- 24/11 : moteur 0.5.0 adopté (contient 0.3.0, 0.4.0 ; #7) : `lieu.js` (horaires par parc, ESTIMÉS), filtre des tests `/(\.game|\/lieu)\.js$/`, `loadSide` retiré de SITE (déduit). `dropAfter` / `holdBack` gardés (propriétaire : serviront à fixer `ele` / `GAME.profile`). Salles de contrôle : à poser par le propriétaire dans l'éditeur, puis retirer `booth`, `boothLabel`, `beacon`.
-- 24/11 : moteur 0.6.0 adopté (#8 : ponts transbordeurs réglables dans l'éditeur ; `yard.post`, `laneGap`, `retract.d`, `d` des voies à retirer de `SITE` après saisie par le propriétaire). Retouches de l'éditeur demandées : qhess34/osmrides#57 ; parc entier : qhess34/osmrides#56.
-- 26/11 : publication Pages en échec du 24 au 26/11 (deploy-pages ne trouvait plus l'artefact dans le même job) → workflow en deux jobs build / deploy, actions à jour : OK. Bugs de jeu et audit du pupitre transmis : qhess34/osmrides#58.
-- 26/11 : moteur 0.7.2 adopté (#9, #10 : durée de tour mesurée, textes génériques, éclairs non réglables, reprise de partie, barrière de fourche, fin d'orage). Retirés de SITE : `lap`, `strike`, `text`. `dropAfter` gardé jusqu'à la saisie du profil des hauteurs.
-- 26/11 : moteur 0.7.3 adopté (#11 : évacués arrêtés sur tout le vantail). Règle de tests à l'adoption (#12) dans `AGENTS.md`.
-- 26/11 : moteur 0.7.4 adopté (#13 : « Départ » envoie un train vide au garage sur Zeus) ; `check.js` zeus adapté (`dep: refuseFullOrRiders`, voie de garage de Zeus pleine au départ).
-- 26/11 : moteur 0.8.0 adopté (#14 : rails mobiles en WYSIWYG, `GAME.site.yard.rails`). Après saisie des positions par le propriétaire : retirer `retract.d` (Hourra), `post` (Hourra, OzIris), `laneGap` (OzIris) ; garder les `d` des voies et le `laneGap` du Hourra.
-- 26/11 : moteur 0.9.0 adopté (#15 : pupitre simplifié) ; check.js et tutos.html adaptés.
-- 26/11 : moteur 0.10.0 adopté (#16 : lift AUTO/MANU) ; check.js, captures.js, tutos.html adaptés.
-- 27/11 : moteur 0.11.0 adopté (zones « Frein 1…m », plus de frein final ni de frein avant gare) ; `preBrake` et `holdBack` retirés de SITE ; tests et tutos adaptés.
-- 27/11 : réimport OSM de Zeus et OzIris (#17) ; Hourra (voie coupée dans OSM) et Goudurix (file superposée à la gare) non réimportés ; postes de contrôle à la main retirés (Zeus, Hourra, Goudurix)
-- Session du Chef moteur (24/11) : session_01UxooiSZ8h5uvMWwB1rESda ; canal principal = issues `inter-equipe`.
-- Issues ouvertes : #5, #6.
+**Publié sur `main`** : moteur **0.11.0** (`const MOTEUR='0.11.0'`). Tests au 27/11 : `check.js` PASS sur les 4 attractions, `save.js` et `mobile.js` PASS.
+
+**En cours**
+- **#17 (ouverte)** — réimport OSM du 27/11 :
+  - Zeus et OzIris : faits (a27ac40) ;
+  - **Goudurix** : données réimportées sur la branche **`goudurix-osm-2711`**. Gare décalée de 3,2 m, `overlapQ` avec 0.11.0. À fusionner dans `main` quand qhess34/osmrides#68 (gare et quais lus dans OSM : toit `w1585383058`, `railway=platform` `w148159470`) est livré, après la batterie de tests de Goudurix ;
+  - **Hourra** : bloqué côté OSM (tronçon de gare `w1231613335` supprimé, circuit ouvert entre les nœuds 1612568062 et 5235560303). Le propriétaire est prévenu.
+- **#14 (ouverte)** — rails mobiles en WYSIWYG (0.8.0). Quand le propriétaire aura enregistré les positions dans l'éditeur, retirer de `SITE` `retract.d` (Hourra), `post` (Hourra, OzIris) et `laneGap` (OzIris). Garder les `d` des voies et le `laneGap` du Hourra.
+- **#6 (ouverte)** — feuille de route « attraction créée depuis OSM et l'éditeur seulement » (point au 26/11 dans l'issue).
+- **Salles de contrôle** : éditeur seulement (propriétaire, 27/11). `booth`, `boothLabel`, `beacon` retirés de Zeus, Hourra, Goudurix ; OzIris attend la sienne dans l'éditeur. Le moteur doit cesser de lire `OSM.ctl` (qhess34/osmrides#57).
+- **Gardé dans `SITE`** : `dropAfter`, pour fixer le profil des hauteurs (`GAME.profile`) ; il sera retiré ensuite.
+
+**Décisions du propriétaire à garder en tête**
+- Le maximum de réglages en WYSIWYG.
+- Pas de frein final ni de frein avant gare à part.
+- Maintenance automatique au garage, avec une durée réglable : c'est le seul moyen de remettre l'usure à zéro.
+- Horaires par parc (`lieu.js`, ESTIMÉS 10:00–19:00).
+- Décors en fichiers image (PNG / SVG, posés dans l'éditeur) ; la statue de Zeus sera à convertir en SVG.
+- Doc globale à la place des tutos par attraction. Captures périmées à refaire avec elle : `img/tutos/05b-zones-pupitre.jpg`, `06-lift.jpg`, probablement `01-pupitre.jpg` et `12-mobile-pupitre.jpg`.
+- Quais : par défaut, l'emprise du bâtiment de la gare ; une zone `railway=platform` dans OSM prend le dessus.
+
+**Points de vigilance**
+- GitHub Pages : workflow en deux jobs (build / deploy, depuis le 26/11).
+- `check.js zeus` : la voie de garage de Zeus est pleine au départ, donc le refus « voie pleine » est attendu (#13).
+- Session de pilotage du Chef stations : `session_01UxooiUusvP87dcc2KzmDKS`. Webmestre : `session_01UxooiRtfABKro1gsAbyXj2`.

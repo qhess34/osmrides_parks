@@ -3,9 +3,9 @@
 Dépôt de les parcs d'attractions d'OSMrides (Parc Astérix d'abord : Zeus, Trace du Hourra, OzIris, Goudurix) : données OSM des attractions, `SITE`, réglages `game.js`, pages de jeu et tutos des parcs.
 Fait partie d'OSMrides (simulations d'exploitation sur données OpenStreetMap, jeu de fan non officiel, interface en français). Organisation des quatre dépôts et règles communes : [`docs/ORGANISATION.md`](https://github.com/qhess34/osmrides/blob/main/docs/ORGANISATION.md) du dépôt `qhess34/osmrides` (à lire une fois).
 
-## Responsable : Chef parcs
+## Responsable : Chef moteur (depuis le 27/11/2026)
 
-Session longue lancée par le propriétaire ; mémoire et reprise : `docs/PILOTAGE.md`. Le chef code peu : il lit les issues, découpe, délègue à un sous-agent (`.claude/agents/`), vérifie, publie sur `main`, rend compte au propriétaire en français court (fait, testé, non testé, estimé).
+Ce dépôt est piloté par le Chef moteur de `qhess34/osmrides` (décision du propriétaire, fusion des sessions moteur et parcs). Il adopte lui-même chaque version du moteur ici. Mémoire et reprise : `docs/PILOTAGE.md` (règles de la fusion, état courant). Le chef code peu : il découpe, délègue à un sous-agent (`.claude/agents/`), vérifie, publie sur `main` et rend compte au propriétaire en français court (fait, testé, non testé, estimé).
 
 ## Règles du propriétaire
 
