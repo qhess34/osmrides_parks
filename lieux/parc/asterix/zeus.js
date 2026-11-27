@@ -27,7 +27,6 @@ const SITE=(()=>{
     stationPoly:OSM.polys.station,stationAt:[0,2.5,9],stationRoofCol:'#a24e38',
     fade:[[0,2.5,9],[7.3,-3.7,1.5],[49,-3,8],[-4,11.4,4]],   // toits qui s'effacent : gare, poste de conduite, garage, escalier
     plat:{load:7.9,exit:3,back:.1,front:1.6},   // exit : quai de débarquement côté nord jusqu'au mur (ESTIMÉ d'après le bâtiment OSM) ; couloir de descente au milieu
-    booth:[7.275,-3.7,0],boothLabel:[10.5,-6.6],beacon:[9.6,-4.9],
     // Entrée (propriétaire, issue #9) : file prolongée de 4,5 m dans la zone piétonne (45 % de ses 10 m de profondeur) et barrière d'entrée déplacée au bout,
     // devant la statue : AJUSTEMENT du jeu (le début du chemin de file OSM, et l'ancien nœud « Entrée T2Z », sont sous la statue, en (-28 ; -1,2)), voir engine/queue.js gateAtMouth.
     // File déduite des chemins de file OSM (issue #37) : chemin 93696870 + haut de l'escalier, raccourci ouest 937019288 (oneway), raccourci est 937019287 ; parts = repli.

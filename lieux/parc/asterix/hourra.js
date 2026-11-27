@@ -52,9 +52,6 @@ const SITE=(()=>{
     stationPoly:OSM.polys.station,stationAt:[1.5,1,9],
     fade:[[1.5,1,9],[-34,-7,12]],   // toits qui s'effacent : gare, garage
     plat:{load:5.9,exit:2.3,back:.6,front:1.2},
-    // Poste de conduite : extrémité sud-est de la gare (propriétaire), côté sud-ouest de la voie, vitre tournée vers la voie, à 2,8 m de l'axe ;
-    // emplacement exact ESTIMÉ (dans le décrochement sud du bâtiment OSM 148160006, là où la voie sort de la gare)
-    booth:[2.8,8.0,-2.427],boothLabel:[0.4,11.6],beacon:[3.95,7.85],
     queue:{entry0:ENTRY0,link:[[61.1,16.8]],ways:[Q,TUN,B,LOOP],   // chemins de file OSM : tronçons et fourche déduits par le moteur (lot 5, engine/queue.js deduceParts) ; parts = repli
      
       parts:[

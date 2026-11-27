@@ -40,5 +40,6 @@ _23/11/2026 après-midi, Chef parcs, session n° 1._
 - 26/11 : moteur 0.9.0 adopté (#15 : pupitre simplifié) ; check.js et tutos.html adaptés.
 - 26/11 : moteur 0.10.0 adopté (#16 : lift AUTO/MANU) ; check.js, captures.js, tutos.html adaptés.
 - 27/11 : moteur 0.11.0 adopté (zones « Frein 1…m », plus de frein final ni de frein avant gare) ; `preBrake` et `holdBack` retirés de SITE ; tests et tutos adaptés.
+- 27/11 : réimport OSM de Zeus et OzIris (#17) ; Hourra (voie coupée dans OSM) et Goudurix (file superposée à la gare) non réimportés ; postes de contrôle à la main retirés (Zeus, Hourra, Goudurix)
 - Session du Chef moteur (24/11) : session_01UxooiSZ8h5uvMWwB1rESda ; canal principal = issues `inter-equipe`.
 - Issues ouvertes : #5, #6.

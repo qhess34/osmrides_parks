@@ -45,8 +45,6 @@ const SITE=(()=>{
     // dessine un palier rectangulaire à son sommet) : juste assez pour les 4 places d'attente par portillon.
     // Deux portillons par wagon, un par rangée de 2 places (propriétaire, 2026-11-16, lot 6) : 14 portillons, deux visiteurs par portillon, les opérateurs vérifient chaque rangée.
     plat:{load:3.9,exit:3,back:.6,front:1.6,gatesPer:'row'},   // quais limités au toit OSM 148159470 (wall=no), propriétaire 23/11 : 3,9 m (embarquement) et 3,0 m (débarquement) mesurés depuis l'axe de la voie, comme le moteur
-    // Poste de contrôle au SUD-EST de la gare, dans son emprise, vitre tournée vers la voie (propriétaire, lot 6) ; pupitre réduit (échelle .55 : 2,1 x 0,9 m, ESTIMÉ).
-    booth:[2.25,8.6,Math.PI/2,.55],boothLabel:[7,12],beacon:[2.55,7.75],
     // Entrée (propriétaire, issue #9 : « ça dépasse trop ») : la barrière OSM est déjà dans la zone piétonne, aucun prolongement (mouthMax 0 : raccord retiré).
     queue:{entry0:ENTRY0,link:[],mouthMax:0,ways:[Q,QLOOP,QIN],   // barrière d'entrée au début du chemin de file OSM 1580112206 ; tronçons et fourche déduits des chemins de file OSM (lot 5, engine/queue.js deduceParts) ; parts = repli
       parts:[{pts:[ENTRY0].concat(Q.slice(Math.hypot(Q[0][0]-ENTRY0[0],Q[0][1]-ENTRY0[1])<1.5?1:0,F0+1))},
