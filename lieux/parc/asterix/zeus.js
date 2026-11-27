@@ -14,7 +14,7 @@ const SITE=(()=>{
     id:'zeus',title:'Tonnerre 2 Zeus',kind:'wood',trackName:'Voie en bois',goal:400,
     car:{len:1.5,n:14},                    // 14 wagons de 2 places côte à côte ; longueur de wagon estimée
     trains:[{name:'Train 1 « Éclair »',col:'#1c8a94',col2:'#f2c14e',wear:30},{name:'Train 2 « Foudre »',col:'#17727c',col2:'#d9dde2',wear:48}],
-    stopBack:3,holdBack:4,dropAfter:14,
+    stopBack:3,dropAfter:14,
     phys:{roll:.098,drag:.0006,vmin:3},
     // Garage dans le prolongement de la gare (SITE.yard, voir docs/manoeuvres.md) : aiguillage = tronçon en S coulissant, une voie où les trains se rangent en file.
     // Voie de garage = voie de maintenance réelle (OSM) ; position et course du chariot (a, b, slide) déduites de la carte ; vitesse de manœuvre et durée de déplacement estimées.
@@ -51,8 +51,8 @@ const SITE=(()=>{
     cams:{gare:{label:'Gare',x:5,z:2,s:19},file:{label:'File',x:-20,z:19,s:14},lift:{label:'Lift',x:35,z:40,s:8.5},descente:{label:'Descente',x:8,z:98,s:9},tunnel2:{label:'Tunnel à effets',x:66,z:56,s:7},croisement:{label:'Croisement',x:52,z:70,s:9},zeus:{label:'Zeus',x:-29,z:-1,s:19}},
     labels:o=>[['Gare',-4,-6.5],['Lift — 30 m',43,36],['Tunnel',o.tunnel[0]-2,o.tunnel[1]+8],['Tunnel à effets',72,52],['Freins',-33,30],["File d'attente",-34,20],['Zeus',-37,-5],['Entrée',-23.6,-3.6],['Garage',49,-12.5],['Aiguillage',17,-9.5]],
     hideNames:['Zeus'],
-    // Moteurs (pneus) par zone : gare, frein final, voie de garage = freins + moteurs (défaut du moteur, ESTIMÉ, à confirmer par le propriétaire) ; SITE.zones pour changer.
-    helpGarage:'<b>Garage</b> : manœuvre manuelle, commandée par zones au pupitre. Pour garer un train : train vide à quai, portillons fermés, aiguillage sur 1 (attendre qu\'il soit en place), puis Dispatch de la voie : le train avance jusqu\'au fond du garage et s\'arrête avant le butoir. Remettez l\'aiguillage sur P. Pour le sortir : gare libre (au besoin, frein final en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il recule jusqu\'en gare ; aiguillage sur P. Dispatch choisit seul le sens (entrée si un train vide attend à quai et que la voie a de la place, sinon sortie) ; il refuse, avec la raison au journal, si l\'aiguillage n\'est pas sur la voie. L\'aiguillage ne bouge pas si un train est dessus ou tout près, et un train avec passagers ne quitte jamais le circuit.',
+    // Moteurs (pneus) par zone : gare, Frein 1, voie de garage = freins + moteurs (défaut du moteur, ESTIMÉ, à confirmer par le propriétaire) ; SITE.zones pour changer.
+    helpGarage:'<b>Garage</b> : manœuvre manuelle, commandée par zones au pupitre. Pour garer un train : train vide à quai, portillons fermés, aiguillage sur 1 (attendre qu\'il soit en place), puis Dispatch de la voie : le train avance jusqu\'au fond du garage et s\'arrête avant le butoir. Remettez l\'aiguillage sur P. Pour le sortir : gare libre (au besoin, Frein 1 en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il recule jusqu\'en gare ; aiguillage sur P. Dispatch choisit seul le sens (entrée si un train vide attend à quai et que la voie a de la place, sinon sortie) ; il refuse, avec la raison au journal, si l\'aiguillage n\'est pas sur la voie. L\'aiguillage ne bouge pas si un train est dessus ou tout près, et un train avec passagers ne quitte jamais le circuit.',
     draw:{
       floor(ctx,s,{lw}){ // garde-corps des quais (l'escalier d'accès est l'escalier OSM couvert, dessiné par le moteur quand son toit s'efface, issue #21)
         ctx.strokeStyle='#4d525a';lw(.1,.6);ctx.beginPath();ctx.moveTo(-8.8,-3);ctx.lineTo(-1.7,-3);ctx.moveTo(.3,-3);ctx.lineTo(9,-2.7);ctx.moveTo(-8.9,7.6);ctx.lineTo(-6,7.7);ctx.moveTo(-1.9,7.8);ctx.lineTo(12.4,8.1);ctx.stroke();

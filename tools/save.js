@@ -63,7 +63,7 @@ const keySize = (page) => page.evaluate(() => Object.keys(localStorage).filter(k
     // manœuvre de garage en cours + zone en MANU + barrière
     const pre = await page.evaluate(() => {
       const r = { riders: G.stats.riders, q: G.queue.length };
-      const z = ZONES.find(Z => Z.auto && Z.id !== 'Fin' && !/^R/.test(Z.id)) || ZONES.find(Z => Z.auto);
+      const z = ZONES.find(Z => Z.auto && Z.id !== ZF && !/^R/.test(Z.id)) || ZONES.find(Z => Z.auto);
       act('zone', z.id + ':m'); r.zone = z.id; if (BARS.length) toggleBar(0); // barrière de file (issue #37)
       if (!devMoving()) { const p = POS_ORDER.find(p => p !== G.dev.pos && p !== 0) || POS_ORDER[0]; act('pos', p); }
       for (let i = 0; i < 400 && devMoving() && G.dev.k < .4; i++) step(.025);

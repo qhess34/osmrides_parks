@@ -35,21 +35,20 @@ const SITE=(()=>{
       {name:'Train 5',col:'#d8a92a',col2:'#2a2a2c',wear:20,lane:4},{name:'Train 6',col:'#d8a92a',col2:'#2a2a2c',wear:60,lane:5}],
     maxRun:5,   // au plus 5 trains sur le parcours (propriétaire) : la sortie d'un 6e est refusée
     // Repères lus dans OSM (tools/specs/hourra.json) : lift, freins de bloc B1 (zone « waiting » de 11,7 m en haut du lift : frein de bloc après le lift, propriétaire
-    // 2026-11-16 ; le lift retient le train tant que B1 est occupé), B2 et B3, frein final, rail de transfert du pont (arrêt au bout du rail : pas de holdBack), frein avant gare.
+    // 2026-11-16 ; le lift retient le train tant que B1 est occupé), B2 et B3, Frein 4 (dernier frein avant le pont), rail de transfert du pont (arrêt au bout du rail), Frein 5 (avant gare).
     stopBack:.5,dropAfter:12,
     phys:{roll:.13,drag:.0016,vmin:3},
-    // Garage sur le frein final : pont transbordeur DROIT (propriétaire) — deux éléments mobiles indépendants, droits, d'un train de long :
+    // Garage sur le Frein 4 : pont transbordeur DROIT (propriétaire) — deux éléments mobiles indépendants, droits, d'un train de long :
     // rail mobile du parcours (rail A) = rail du circuit (zone de freinage), deux positions seulement : sur le circuit ou retiré vers l'est (retract) ;
     // chariot et rail du chariot (rail B ; garage, freins et pneus, porte le train) : en ligne avec le circuit (G, seulement rail A retiré) ou face à la voie k (ouest).
     // Le train y entre en marche avant et en ressort en arrière.
-    // Emplacement du rail mobile : tronçon OSM « moving » 1580086185 (« waiting » avant le 20/11) (15,4 m, entre la courbe qui suit le frein final et le frein avant gare). ESTIMÉS : course du rail A (3,2 m), vitesse du chariot et du rail A
+    // Emplacement du rail mobile : tronçon OSM « moving » 1580086185 (« waiting » avant le 20/11) (15,4 m, entre la courbe qui suit le Frein 4 et le Frein 5). ESTIMÉS : course du rail A (3,2 m), vitesse du chariot et du rail A
     // (0,6 m/s, 4 s au moins par déplacement), vitesse de manœuvre des trains (1,8 m/s), sens d'entrée dans les voies, chariot au repos face à la voie 1.
     yard:{at:'brake',device:'traverser',side:1,gap:GAP,post:.6,laneGap:LGAP,move:{v:1.8,vc:.6,t:4},
       devName:'Chariot',devLabel:'le chariot',retract:{d:3.2,name:'Rail mobile du parcours',short:'Rail parcours',rest:1},
       lanes:LN.map((P,k)=>lane(k+1,P))},
-    // Frein avant gare (propriétaire, 2026-11-15) : zone de freinage de stockage entre le rail mobile du parcours et l'entrée de la gare, un train de long,
+    // Frein 5 (propriétaire, 2026-11-15) : zone de freinage de stockage entre le rail mobile du parcours et l'entrée de la gare, un train de long,
     // avec pneus ; AUTO par défaut (retient le train tant que la gare est occupée), MANU au choix. Position : tronçon OSM « waiting » 1580086183 (repères pre0/pre1).
-    preBrake:{name:'Frein avant gare'},
     stationPoly:OSM.polys.station,stationAt:[1.5,1,9],
     fade:[[1.5,1,9],[-34,-7,12]],   // toits qui s'effacent : gare, garage
     plat:{load:5.9,exit:2.3,back:.6,front:1.2},
@@ -75,17 +74,17 @@ const SITE=(()=>{
     jobsites:{liftFix:[24,-6],chainRev:[24,-6],trackRev:[40,22],brakeFix:[-31,-38],brakeRev:[-31,-38],trainRev:[-30,-9],rearm:[1.5,-1.5]},
     view:{x:40,z:-28,w:190,h:150,bounds:[-130,200,-150,110]},
     cams:{gare:{label:'Gare',x:1.5,z:1,s:19},file:{label:'File',x:38,z:14,s:8},lift:{label:'Lift',x:38,z:-40,s:7},
-      frein:{label:'Frein final',x:-26,z:-30,s:12},garage:{label:'Garage',x:-31,z:-18,s:11},
+      frein:{label:'Frein 4',x:-26,z:-30,s:12},garage:{label:'Garage',x:-31,z:-18,s:11},
       rocher:{label:'Rocher',x:42,z:25,s:10},passerelle:{label:'Passerelle',x:35.5,z:-4.4,s:12}},
-    labels:()=>[['Gare',-6,-8],['Lift — 31 m',44,-50],['Frein final',-36,-42],['Garage',-31,-4],['Pont transbordeur',-38,-33],["File d'attente",40,8],['Rocher',45,35],['Entrée',67,23]],
+    labels:()=>[['Gare',-6,-8],['Lift — 31 m',44,-50],['Frein 4',-36,-42],['Garage',-31,-4],['Pont transbordeur',-38,-33],["File d'attente",40,8],['Rocher',45,35],['Entrée',67,23]],
     // Commande par zones : freins de bloc B1…B3 = freins + roues de propulsion en marche avant seule (drive:'fwd', bouton AV sans AR, propriétaire 2026-11-17) ;
-    // frein final, rail mobile du parcours, rail du chariot, voies = freins + moteurs (défauts du moteur, disposition ESTIMÉE). Exemple pour changer : zones:{B:{drive:false}, RA:{drive:false}}.
-    helpGarage:'<b>Garage</b> : six voies droites, un train par voie, desservies par un pont transbordeur droit sur le frein final, commandées par zones. Deux éléments mobiles : '
+    // Frein 4, rail mobile du parcours, rail du chariot, voies = freins + moteurs (défauts du moteur, disposition ESTIMÉE). Exemple pour changer : zones:{B:{drive:false}, RA:{drive:false}}.
+    helpGarage:'<b>Garage</b> : six voies droites, un train par voie, desservies par un pont transbordeur droit sur le Frein 4, commandées par zones. Deux éléments mobiles : '
       +'le rail mobile du parcours (rail du circuit, zone de freinage), sur le circuit (C) ou retiré vers l\'est (E), et le chariot, qui porte le rail du chariot (rail de garage) et emporte le train : en ligne avec le circuit (G) ou face à une voie (1 à 6). '
-      +'Pour garer un train : envoyez-le vide (Gare AV), frein final en MANU et serré (il s\'arrête avant le pont), rail parcours sur E, chariot sur G, relâchez le frein final puis Frein final AV : il roule sur le rail du chariot et s\'y arrête ; '
+      +'Pour garer un train : envoyez-le vide (Gare AV), Frein 4 en MANU et serré (il s\'arrête avant le pont), rail parcours sur E, chariot sur G, relâchez le Frein 4 puis Frein 4 AV : il roule sur le rail du chariot et s\'y arrête ; '
       +'chariot sur une voie libre (il emporte le train), Dispatch de cette voie : le train y entre (chaque voie n\'a qu\'un bouton, Dispatch, qui choisit le sens) ; chariot ramené sur la voie 1, rail parcours sur C, TOUT AUTO. '
-      +'Pour sortir un train : chariot sur la voie du train, Dispatch de la voie (il recule sur le rail du chariot), rail parcours sur E, chariot sur G avec le dernier canton libre, Rail du chariot AV : il va au frein avant gare puis entre en gare ; chariot sur une voie, puis rail parcours sur C. '
+      +'Pour sortir un train : chariot sur la voie du train, Dispatch de la voie (il recule sur le rail du chariot), rail parcours sur E, chariot sur G avec le dernier canton libre, Rail du chariot AV : il va au Frein 5 puis entre en gare ; chariot sur une voie, puis rail parcours sur C. '
       +'Le chariot ne vient en ligne que si le rail mobile du parcours est retiré ; il ne revient que si le chariot n\'est pas en ligne. Ni l\'un ni l\'autre ne bouge si un train y roule ou n\'y est qu\'à moitié, ni avec des passagers. '
-      +'Aucun rail du circuit en ligne : les trains attendent avant le pont. Gare occupée : un train attend sur le frein avant gare, un sur le rail mobile du parcours, un au frein final. Au plus cinq trains sur le parcours.'
+      +'Aucun rail du circuit en ligne : les trains attendent avant le pont. Gare occupée : un train attend sur le Frein 5, un sur le rail mobile du parcours, un au Frein 4. Au plus cinq trains sur le parcours.'
   };
 })();

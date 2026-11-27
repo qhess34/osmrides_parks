@@ -31,10 +31,10 @@ const SITE=(()=>{
     trains:[{name:'Train 1',col:'#9a2d28',col2:'#3a3a3e',wear:30},{name:'Train 2',col:'#9a2d28',col2:'#3a3a3e',wear:44}],
     track:{spine:'#c4a32e',rail:'#b9532f',support:'#8e3b2c'}, // poutre et traverses jaunes, rails tubulaires orange-rouge, supports rouille (photo du propriétaire, 2026-11-15),
     // (propriétaire) un seul train sur le lift ; le lift retient le train en haut si la zone de freinage suivante est occupée : comportement par défaut du moteur
-    // Deux zones de freinage (propriétaire) : frein de bloc B1 (repère blk1) juste avant la portion droite sous le lift, frein final (brk) sur la voie parallèle à la gare. Position d'après le propriétaire, emplacement exact ESTIMÉ.
-    // Repères lus dans OSM (2026-11-16) : lift 541092982, B1 = zone « waiting » 1580112200, frein final = zone « waiting » 1580112203 (voie parallèle à la gare, propriétaire).
-    // holdBack 34 : le train s'arrête au bout du frein final OSM (qui finit 31 m avant la gare), 0,6 m avant le tronçon mobile de l'aiguillage (ESTIMÉ à ± 1 m).
-    stopBack:.5,holdBack:34,dropAfter:35,   // le train roule vers le sud ; côté d'embarquement déduit par le moteur (0.3.0+) : embarquement à l'OUEST (portillons à l'ouest, propriétaire ; entrée OSM à l'ouest)
+    // Deux zones de freinage (propriétaire) : frein de bloc B1 (repère blk1) juste avant la portion droite sous le lift, Frein 2 (brk) sur la voie parallèle à la gare. Position d'après le propriétaire, emplacement exact ESTIMÉ.
+    // Repères lus dans OSM (2026-11-16) : lift 541092982, B1 = zone « waiting » 1580112200, Frein 2 = zone « waiting » 1580112203 (voie parallèle à la gare, propriétaire).
+    // Le train s'arrête à la fin de la zone OSM du Frein 2 (31 m avant la gare), 0,6 m avant le tronçon mobile de l'aiguillage (moteur 0.11.0).
+    stopBack:.5,dropAfter:35,   // le train roule vers le sud ; côté d'embarquement déduit par le moteur (0.3.0+) : embarquement à l'OUEST (portillons à l'ouest, propriétaire ; entrée OSM à l'ouest)
     phys:{roll:.02,drag:.0004,vmin:3},
     // Garage : une seule voie (la voie de maintenance OSM), 2 trains au plus. Durée de rotation (4 s) et vitesse de manœuvre ESTIMÉES.
     yard:{at:'station',device:'switch',back:true,rotary:true,s:true,a:45.4,b:51.6,slide:1,side:-1,len:5.6,devName:'Aiguillage',devLabel:'l\'aiguillage',lanes:[{name:'Garage',pts:lanePts,cap:2}],move:{v:2.4,t:4}},
@@ -71,14 +71,14 @@ const SITE=(()=>{
     // (dévers 0 → 720°, déport hélicoïdal 3 m ESTIMÉ, s 538–592 au sol). Train tête en bas dessiné par le moteur (dessous de caisse, voie par-dessus).
     cams:{gare:{label:'Gare',x:3,z:0,s:17},file:{label:'File',x:0,z:40,s:7},lift:{label:'Lift',x:6,z:78,s:6.5},descente:{label:'Grande descente',x:29,z:96,s:8},
       butterfly:{label:'Butterfly',x:38,z:70,s:11},loop:{label:'Loop',x:54,z:62,s:6.5},batwing:{label:'Batwing',x:55,z:28,s:11},corkscrew:{label:'Double Corkscrew',x:19,z:92,s:9},
-      frein:{label:'Frein final',x:-6,z:30,s:8},garage:{label:'Garage',x:-14,z:10,s:11}},
+      frein:{label:'Frein 2',x:-6,z:30,s:8},garage:{label:'Garage',x:-14,z:10,s:11}},
     labels:()=>[['Gare',6,-4],['Lift — 36 m',12,78],['Grande descente',38,100],['Virage à 180°',14,128],['Butterfly',27,70],['Loop',66,62],['Batwing',60,22],['Double Corkscrew',3,92],
-      ['Poste aiguillage',-12.5,-7.4],['Frein final',-32,35],['Garage',-32,12],['Entrée',27,22],["File d'attente",-14,36],['Sortie',9,15]],
+      ['Poste aiguillage',-12.5,-7.4],['Frein 2',-32,35],['Garage',-32,12],['Entrée',27,22],["File d'attente",-14,36],['Sortie',9,15]],
     // Le premier frein du parcours (B1) RALENTIT nettement le train (propriétaire) : vitesse ramenée à 8 m/s (≈ 29 km/h, ESTIMÉ) en passage normal ; arrêt seulement si le canton suivant est occupé.
     zones:{B1:{trim:{v:8}}},
     helpGarage:'<b>Garage</b> : une voie de maintenance, en amont de la gare (≈ 45 m avant l\'arrêt du train). L\'aiguillage est un rail rotatif : il tourne sur lui-même autour du tube de rail, pour présenter le circuit (P) ou la voie (1). '
       +'Pour garer un train : train vide à quai, portillons fermés, aiguillage sur 1 (attendre la fin de la rotation), puis Dispatch de la voie : le train recule de la gare jusqu\'au fond de la voie (il s\'arrête avant le butoir). Remettez l\'aiguillage sur P. '
-      +'Pour le sortir : gare libre (au besoin, frein final en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il avance jusqu\'en gare ; aiguillage sur P. '
+      +'Pour le sortir : gare libre (au besoin, Frein 2 en MANU et serré pour retenir l\'autre train), aiguillage sur 1, puis Dispatch : il avance jusqu\'en gare ; aiguillage sur P. '
       +'L\'aiguillage ne tourne pas si un train est dessus ou tout près, et un train avec passagers ne quitte jamais le circuit. Dispatch choisit seul le sens : entrée si un train vide attend à quai et que la voie a de la place, sinon sortie du train de tête.',
     draw:(()=>{
       // POSTE DE L'AIGUILLAGE (photo du propriétaire, docs/sources/goudurix-aiguillage-rotation.png) : plate-forme métallique rouille avec garde-corps, escalier galvanisé,

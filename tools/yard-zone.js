@@ -1,4 +1,4 @@
-// Essai du garage branché sur une zone d'attente quelconque (issue #36) : node tools/yard-zone.js <site> <zone> (ex. goudurix B1, hourra B2, hourra Fin).
+// Essai du garage branché sur une zone d'attente quelconque (issue #36) : node tools/yard-zone.js <site> <zone> (ex. goudurix B1, hourra B2, hourra B4).
 // Aiguillage EN AMONT (issue #38) : node tools/yard-zone.js <site> <zone> back (ex. goudurix B1 back, hourra B3 back) : SITE.yard.back posé en mémoire en amont du point d'arrêt
 // de la zone, roues de propulsion de la zone avec marche arrière (SITE.zones.<zone>.drive:true) ; sortie en marche avant, retenue avant l'appareil, entrée en marche arrière (AR), refus ;
 // la même zone en marche avant seule (drive:'fwd') doit être refusée au chargement.
@@ -56,7 +56,7 @@ const SITE_ID=process.argv[2]||'goudurix',ZONE=process.argv[3]||'B1',BACK=proces
   ok('parked',until(()=>E.st==='garage'&&!E.mv,4000)&&fwdLim(E)-E.g<.05);
   click('#yP');ok('devP2',until(()=>!devOff(),400));
   // exploitation automatique 5 min de jeu, appareil sur P : aucune collision
-  act('zone','Fin:m');if(G.zm.Fin)act('zone','Fin:m');
+  act('zone',ZF+':m');if(G.zm[ZF])act('zone',ZF+':m');
   until(()=>false,12000);
   ok('runs',trains.some(t=>t!==E&&(t.st==='run'||t.st==='station')));
   return {steps:out.join(' '),minD:+minD.toFixed(2),minW,CAR,ANCH:+ANCH.toFixed(1),SW_A:+SW_A.toFixed(1),hold:HOLD_Z};
