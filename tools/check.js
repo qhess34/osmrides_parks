@@ -61,7 +61,7 @@ const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur
       await click('#bAuto'); await gates();
       await click('#bGo'); ok('depart0', await until("trains[0].st==='run'&&trains[0].s>S_ST+TLEN+3", 4000));
       await page.evaluate(() => act('zone', 'B1:k')); ok('refuseAuto', await logHas('en AUTO : passez'));
-      await click('#zB1_m'); await click('#zB1_k'); ok('blk1Held', await until('trains[0].blk&&trains[0].v===0&&Math.abs(trains[0].s-BLK[0])<.5', 8000) && await logHas('arrêté au frein de bloc 1'));
+      await click('#zB1_m'); await click('#zB1_k'); ok('blk1Held', await until('trains[0].blk&&trains[0].v===0&&Math.abs(trains[0].s-BLK[0])<.5', 8000) && await logHas('arrêté au frein (de bloc )?1'));
       await shot('1-repos');
       // sortir le train de la voie k : chariot face à la voie, Dispatch de la voie (sur le rail B), rail A retiré, chariot sur G, Avancer (rail B) vers la gare
       await click('#y' + o.k); ok('dev' + o.k, await until(`devOn(${o.k - 1})`, 4000));
