@@ -37,7 +37,6 @@ const SITE=(()=>{
     // Tunnel OSM : 421460641 (tunnel=yes layer=-1) ; la galerie 1580105918 est maintenant layer=-1 sans tunnel (OSM 27/11), plus de tunnel 'roof'. Le propriétaire dit qu'il passe SOUS L'EAU (bassin) ; profondeur ESTIMÉE (≈ -3 m, profil de la spec).
     tunnels:[{under:'water'}],
     stationPoly:OSM.polys.station,stationAt:[-7,-8,9],   // toit de la gare : roof:colour=grey lu dans OSM (w420016980)
-   
     fade:[[-7,-8,9],[-35,-25,8]],   // toits qui s'effacent : gare, garage (la halle de la zone de freinage et du pont transbordeur, w420016978, n'est plus un bâtiment OSM : man_made=platform)
     // Quais : embarquement côté ouest (entrée OSM), débarquement côté est (sortie OSM) ; profondeurs ESTIMÉES d'après le bâtiment OSM 420016980.
     stairsOut:false,   // escaliers de la file dans la gare, tels qu'OSM (issue #13) : pas d'escalier « en applique »
