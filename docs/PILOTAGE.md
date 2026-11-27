@@ -12,19 +12,18 @@
 
 ## État courant
 
-_27/11/2026, dernière note du Chef parcs avant la fusion._
+_27/11/2026, adoption du moteur 0.12.0 sur la branche `adopt-0.12.0` (pas encore sur `main`)._
 
-**Publié sur `main`** : moteur **0.11.0** (`const MOTEUR='0.11.0'`). Tests au 27/11 : `check.js` PASS sur les 4 attractions, `save.js` et `mobile.js` PASS.
+**Sur `main`** : moteur **0.11.0**. **Sur `adopt-0.12.0`** : `const MOTEUR='0.12.0'` (étiquette sur le commit 1447c04 d'osmrides), réimport d'OzIris refait avec l'outil JS (`tools/import-osm.js` d'osmrides : tags de toit, niveaux), `stationRoofCol` retiré de `SITE` d'OzIris (toit gris lu dans OSM). Déjà retirés avant : `fade` de la halle, tunnel à toit d'OzIris, libellés « Frein final » de Hourra. Tests avec le moteur de l'étiquette : `check`, `save`, `mobile` PASS sur OzIris et Hourra ; Zeus : `check` PASS ou échec aléatoire sur les évacuations (qhess34/osmrides#73) ; Goudurix : `jumpQ=1` (données de `main`, zone d'attente à ajuster dans l'éditeur).
 
-**En cours**
-- **#17 (ouverte)** — réimport OSM du 27/11 :
-  - Zeus et OzIris : faits (a27ac40) ;
-  - **Goudurix** : données réimportées sur la branche **`goudurix-osm-2711`**. Gare décalée de 3,2 m, `overlapQ` avec 0.11.0. À fusionner dans `main` quand qhess34/osmrides#68 (gare et quais lus dans OSM : toit `w1585383058`, `railway=platform` `w148159470`) est livré, après la batterie de tests de Goudurix ;
-  - **Hourra** : bloqué côté OSM (tronçon de gare `w1231613335` supprimé, circuit ouvert entre les nœuds 1612568062 et 5235560303). Le propriétaire est prévenu.
-- **#14 (ouverte)** — rails mobiles en WYSIWYG (0.8.0). Quand le propriétaire aura enregistré les positions dans l'éditeur, retirer de `SITE` `retract.d` (Hourra), `post` (Hourra, OzIris) et `laneGap` (OzIris). Garder les `d` des voies et le `laneGap` du Hourra.
-- **#6 (ouverte)** — feuille de route « attraction créée depuis OSM et l'éditeur seulement » (point au 26/11 dans l'issue).
-- **Salles de contrôle** : éditeur seulement (propriétaire, 27/11). `booth`, `boothLabel`, `beacon` retirés de Zeus, Hourra, Goudurix ; OzIris attend la sienne dans l'éditeur. Le moteur doit cesser de lire `OSM.ctl` (qhess34/osmrides#57).
-- **Gardé dans `SITE`** : `dropAfter`, pour fixer le profil des hauteurs (`GAME.profile`) ; il sera retiré ensuite.
+**Reste à faire**
+- Fusionner `adopt-0.12.0` dans `main` (quand le propriétaire confirme l'étiquette 0.12.0).
+- **#17 (ouverte)** — réimport OSM du 27/11 : Zeus, OzIris, Hourra faits ; **Goudurix** sur la branche `goudurix-osm-2711` (gare décalée de 3,2 m ; zone d'attente à ajuster dans l'éditeur ; lecture de la gare et des quais dans OSM : qhess34/osmrides#68).
+- **#14 (ouverte)** — rails mobiles en groupes (0.12.0) : quand le propriétaire aura enregistré les positions dans l'éditeur, retirer de `SITE` `retract.d` (Hourra), `post` (Hourra, OzIris) et `laneGap` (OzIris). Garder les `d` des voies et le `laneGap` du Hourra.
+- **#6 (ouverte)** — feuille de route « attraction créée depuis OSM et l'éditeur seulement ».
+- **Salles de contrôle** : éditeur seulement (`booth`, `boothLabel`, `beacon` encore dans `SITE` d'OzIris, à retirer quand elle aura la sienne).
+- **Gardé dans `SITE`** : `dropAfter`, pour fixer le profil des hauteurs (`GAME.profile`).
+- Toits de la dalle des voies de garage, heurtoirs, carter du rotatif : encore dessinés par le moteur (qhess34/osmrides#68).
 
 **Décisions du propriétaire à garder en tête**
 - Le maximum de réglages en WYSIWYG.
