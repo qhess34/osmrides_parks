@@ -36,8 +36,9 @@ const SITE=(()=>{
     // zone Frein 2 (OSM « waiting » 1330192627, 15,7 m) : zone de freinage de stockage (Frein 2), AUTO par défaut ; pneus ESTIMÉS.
     // Tunnel OSM : 421460641 (tunnel=yes layer=-1) ; la galerie 1580105918 est maintenant layer=-1 sans tunnel (OSM 27/11), plus de tunnel 'roof'. Le propriétaire dit qu'il passe SOUS L'EAU (bassin) ; profondeur ESTIMÉE (≈ -3 m, profil de la spec).
     tunnels:[{under:'water'}],
-    stationPoly:OSM.polys.station,stationAt:[-7,-8,9],stationRoofCol:'#b9a27a',
-    fade:[[-7,-8,9],[-35,-25,8]],   // toits qui s'effacent : gare, garage (la halle du Frein 1 et du pont, w420016978, n'est plus un bâtiment OSM : man_made=platform)
+    stationPoly:OSM.polys.station,stationAt:[-7,-8,9],   // toit de la gare : roof:colour=grey lu dans OSM (w420016980)
+   
+    fade:[[-7,-8,9],[-35,-25,8]],   // toits qui s'effacent : gare, garage (la halle de la zone de freinage et du pont transbordeur, w420016978, n'est plus un bâtiment OSM : man_made=platform)
     // Quais : embarquement côté ouest (entrée OSM), débarquement côté est (sortie OSM) ; profondeurs ESTIMÉES d'après le bâtiment OSM 420016980.
     stairsOut:false,   // escaliers de la file dans la gare, tels qu'OSM (issue #13) : pas d'escalier « en applique »
     plat:{load:7.3,exit:3.5,back:.6,front:1.6},   // quai d'embarquement jusqu'à l'entrée OSM (entrance=main, à 7,0 m de la voie depuis le changeset 192118796) : profondeur ESTIMÉE
