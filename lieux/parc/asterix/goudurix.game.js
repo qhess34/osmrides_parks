@@ -1,4 +1,4 @@
-// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (sites/<site>.js).
+// Données du jeu écrites par l'éditeur T2Z (editor/, docs/ARCHITECTURE.md D1-D3) : priorité sur SITE (lieux/<type>/<lieu>/<el>.js).
 // Le corps est du JSON strict : à modifier de préférence avec l'éditeur (docker compose up -d, http://127.0.0.1:8787/).
 const GAME = {
   "barriers": {
@@ -51,33 +51,21 @@ const GAME = {
           -7.75
         ],
         [
-          -6.61,
-          -7.6
+          -4.46,
+          -7.64
         ],
         [
-          -6.53,
-          -0.41
+          -3.8,
+          -0.4
         ],
         [
-          -9,
-          -0.29
-        ],
-        [
-          -8.89,
-          0.56
-        ],
-        [
-          -6.6,
-          0.46
-        ],
-        [
-          -6.06,
-          10.04
+          -3.76,
+          10.16
         ]
       ]
     }
   ],
   "board": {
-    "depth": 2.13
+    "depth": 0.86
   }
 };
