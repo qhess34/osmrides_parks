@@ -6,6 +6,8 @@ const path = require('path'), { execFileSync } = require('child_process'), fs = 
 const site = process.argv[2] || 'zeus', build = process.argv.includes('--build');
 const root = path.resolve(__dirname, '..');
 const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur local : MOTEUR=../osmrides/engine/
+const GRAINE = +(process.env.GRAINE || 1) >>> 0; // aléa fixé (issue #73) pour l'étape bars : GRAINE=<entier> pour en changer ; le jeu normal garde Math.random
+const seeded = pg => pg.addInitScript(g => { let s = g; window.__graine = n => { s = n; }; Math.random = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }, GRAINE);
 (async () => {
   fs.mkdirSync('/tmp/t1', { recursive: true });
   let url;
@@ -364,10 +366,11 @@ const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur
   // fourche : autre chemin pris ou attente ; pendant une évacuation, personne n'entre ni n'avance vers la gare ; l'évacué arrêté repart quand on l'ouvre
   {
     const p7 = await browser.newPage(); p7.on('pageerror', e => errors.push(String(e.message || e)));
-    await p7.goto(url); await p7.waitForFunction(() => typeof act === 'function' && (act('help'), true)); await p7.click('[data-act=closeHelp]');
-    const bt = await p7.evaluate(() => {
+    await seeded(p7);
+    await p7.goto(url); await p7.waitForFunction(() => typeof act === 'function' && (act('help'), true)); // aide fermée dans l'évaluation, jeu déjà arrêté : aucun pas au temps réel
+    const bt = await p7.evaluate(G_ => {
       const R = [], ck = (n, v) => R.push(n + (v ? '' : ':FAIL'));
-      act('speed', 0); G.wx.next = 1e6; G.crowd = 3; if (!G.open) act('open');
+      act('speed', 0); act('closeHelp'); __graine(G_); G.wx.next = 1e6; G.crowd = 3; if (!G.open) act('open');
       const across = (e, d, open) => { let i = 1; while (i < e.P.length - 1 && e.C[i] < d) i++; const a = e.P[i - 1], b = e.P[i], l = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, k = (d - e.C[i - 1]) / l, tx = (b[0] - a[0]) / l, tz = (b[1] - a[1]) / l, c = [a[0] + tx * l * k, a[1] + tz * l * k];
         return { x: +(c[0] - tz * 1.3).toFixed(2), z: +(c[1] + tx * 1.3).toFixed(2), ang: +(Math.atan2(-tx, tz) * 180 / Math.PI).toFixed(1), len: 2.6, open: !!open }; };
       const set = B => { GM.barriers = B; reGates(); };
@@ -402,7 +405,7 @@ const MO = process.env.MOTEUR ? '&moteur=' + process.env.MOTEUR : '';  // moteur
       ck('evacHeld' + (qd ? '' : '(vide)'), cross === 0 && (held > 0 || !qd)); ck('evacNoAdvance', adv === 0);
       toggleBar(0); run(1200); ck('evacResume', !G.walkers.some(k => k.kind === 'evac' && k.bk));
       set(B0); ck('overlapQ=' + ovB + (ovB ? ' ex ' + JSON.stringify(ovBEx) : '') + ' (max ' + ovBn + ')', ovB === 0); return R.join(' ');
-    });
+    }, GRAINE);
     man += ' | bars: ' + bt; await p7.close();
   }
   // issue #34 / #37 : file déduite des chemins OSM (SITE.queue.ways) ou écrite à la main (SITE.queue.parts) ; anciennes clés GAME.barriers converties (lues, jamais réécrites)
